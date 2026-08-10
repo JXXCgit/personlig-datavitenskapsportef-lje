@@ -5,21 +5,17 @@
 ## Project overview
 
 This project explores how virtual reality (VR) has been used to support the psychological and social needs of people living with dementia.
-
 It focuses on interventions such as VR reminiscence, relaxing or nature-based experiences, and socially facilitated activities. The aim is not to determine whether every form of VR "works", but to understand what has been studied, what outcomes have been reported, and where the evidence remains uncertain.
-
 This is an independent portfolio project. It is not presented as a completed systematic review, a commissioned evidence assessment or a clinical recommendation.
 
 ## Why I chose this topic
 
 The project developed from my existing research interests. My recent research has involved VR-based behavioural tasks and social interaction in healthy adults. Through an NTNU Discovery project, I also began exploring how interactive VR might eventually support social and cognitive experiences relevant to dementia care.
-
 I wanted to understand how similar ideas have been investigated in clinical and care settings, and whether the available evidence supports further development. The project also gives me an opportunity to apply transferable skills in research design, reproducible data handling, critical reading and R analysis to evidence synthesis.
 
 ## Review question
 
 What does the available evidence suggest about the effects, acceptability and safety of VR-based psychosocial interventions for people living with dementia?
-
 The review considers four broad areas:
 
 - mental well-being and behavioural or psychological symptoms;
