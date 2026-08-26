@@ -1,0 +1,2043 @@
+Machine Learning Specialization
+
+1.1.1 欢迎来到机器学习!
+2.1.2 机器学习的应用
+3.2.1 什么是机器学习：giving computer the ability to learn without being explicitly programmed
+4.2.2 监督学习 part 1 (supervised learning): 
+> def: give input and output label, learned from being given the correct answer
+e.g., 
+input: email output: spam or not spam (0 or 1)---> spam filtering (application)
+input: audio output: text transcripts---> speech recognition (application)
+input: english output:french---> machine translation (application)
+input: ad, user info output: click or not click---> online advertising (application)
+input: image, radar info output: positions of other cars---> self-driving cars (application)
+input: image of phone output: defect or not defect---> visual inspection (application)
+
+train the model with input and output label to learn, then use the model to take the new input to predict the new output
+e.g., 
+Regression: housing price prediction (predict a number, infinitely many possible outputs)
+x: house size, y: house price, fit a model (a curve or straight line) to learn the relationship between x and y, then use the model to predict the price of a new house given its size
+5.2.3 监督学习 part 2
+e.g.,
+Classification: breast cancer detection (predict categories, small number of possible outputs)
+one input case: (size of tumor as x, maglinant (type 1 or type 2) or benign as y)
+two or more inputs case: (size of tumor as x, age as y, maglinant (type 1 or type 2) or benign as z by using algorithm to find some boundary line to separate the two categories)
+
+6.2.4 非监督学习 part 1 (unsupervised learning): 
+> def: give input only, not output label, learned from the structure of the data 
+e.g., Clustering: 
+DNA microarray (individuals as each column, genes as each row, using clustering to category the genes into different types)
+Grouping customers (e.g., by their purchasing behavior, to segment customers into different groups)
+
+7.2.5 非监督学习 part 2
+e.g., Anomaly detection: find unusuall data points
+e.g., Dimensionality reduction (compress data using few numbers)
+8.2.6 Jupyter Notebooks (in python)
+9.3.1 线性回归模型 part 1 (linear regression model)
+x=input variable/feature y=output variable/target variable, m=number of training examples 
+10.3.2 线性回归模型 part 2
+> 线性回归拟合一个具有系数的线性模型w=(w1,...wn)目标是最小化数据集中观测目标与线性近似预测目标之间的残差平方和
+#解决的问题：min||Xw-y||^2, to find the best w to make the model predict as accurately as possible
+w: parameter (weight,权重， coefficient), b: parameter (bias, 偏置，intercept)
+> training set: features, targets ---> learning algorithm ---> (x(feature)-->funciton(model)-->y-hat (prediction(estimated y/target)))
+> how to present f (function)? 
+fw,b(x)=wx+b 
+f(x) =wx+b  (one variable/univariable linear regression)
+11.3.3 代价函数 (cost function: square error cost function)
+model: fw,b(x)=wx+b , w,b: parameters (w: slope, b: intercept)
+\(J(w,b) = \frac{1}{2m} \sum_{i=1}^{m} (\hat{y}^{(i)} - y^{(i)})^2\): 评价模型预测得好不好
+(hat{y}-y): error (how far off the prediction is from the target)
+m: number of training examples
+12.3.4 代价函数的直观理解
+Linear regression model:
+\(J(w,b) = \frac{1}{2m} \sum_{i=1}^{m} (\（wx+b)^{(i)} - y^{(i)})^2\): f数值越小，模型预测得越好
+goal: minize J(w,b) to find the best w and b to make the model predict as accurately as possible:
+when m=3, b=0, w=1, J(w,b)=0, when b=0, w=0.5, J(w, b)=0.58,
+when m=3, b=0, w=0, J(w,b)=2.3
+choose w to minize J(w)
+13.3.5 可视化代价函数
+model: fw,b(x)=wx+b, parameters:w, b, 
+cost function: J(w,b) = 1/(2m) * sum((hat{y}-y)^2)
+objective: minize J(w,b)： 
+when b = 0, J(w,b)： U shape curve, normal distribution 
+when b !=0, J(w,b): 3D surface, bowl shape
+14.3.6 可视化的例子
+using 3D surface map or 2d map to visualize the cost function J(w,b) to find the best w and b to make the model predict as accurately as possible
+15.4.1 梯度下降 (gradient descent) for both regression model but models like deep learning
+> J(w,b) for linear regression or any functions 
+> want min j(w,b), start with some w, b, like (w=0, b=0), then keeep changing w, b to reduce j(w,b) until we settle at or near a minumum
+16.4.2 实现梯度下降
+> w=w-α*∂J(w,b)/∂w, b=b-α*∂J(w,b)/∂b (α: learning rate, small positive number, if α is large, means to take big steps to take down hill, if α is small, means to take small steps to take down hill)
+> ∂: derivative (导数), tell you which direction to take baby step and combine with learning rate α to take a step down hill to reduce J(w,b)
+> in the graph of surface plot, repeat/update w, and b steps until convergence(收敛), meaning the steps are small enough to stop, and we have found the best w and b to make the model predict as accurately as possible
+w=w-α*∂J(w,b)/∂w: 新的 w = 旧的 w − 一小步（w和b是同时更新的）
+#∂J(w,b)/∂w=1/m*sum((fw,b(x)(i))-y(i))*x(i) (求导，对哪个求导，其余为常数) 
+#∂J(w,b)/∂b=1/m*sum((fw,b(x)(i))-y(i)) (求导，对哪个求导，其余为常数)
+17.4.3 梯度下降的直观理解
+> learn more about what is learning rate and derivative 
+> J(w,b), when b=0, w and cost function j is a two dimension graph （U-shape, 凸优化）: 
+w=w-α*∂J(w)/∂w (导数J(w)/∂w 是cost function当前在某个点的切线斜率，告诉你在这个点上cost function的变化趋势，导数是正数，说明cost function在这个点上是上升的，想要下降，就要往负方向走，导数是负数，说明cost function在这个点上是下降的，想要下降，就要往正方向走)
+18.4.4 学习率
+> a: learning rate that is too small will take a long time to converge, a learning rate that is too large may overshoot the minimum and diverge, so we need to choose a proper learning rate to make the model converge to the minimum as fast as possible
+> 在ununu型的cost function中，w=w-α*∂J(w)/∂w: 存在多个local minumum, 当梯度下降走到某个最低点时，导数会变成 0，因此它会停在那里，即使学习率等于0
+19.4.5 线性回归中的梯度下降
+> linear regression model: fw,b(x)=wx+b, square cost function: J(w,b) = 1/(2m) * sum((fw,b({x})(i))-y(i))^2, gradient descent algorithm: w=w-α*∂J(w,b)/∂w, b=b-α*∂J(w,b)/∂b
+> derivative of J(w,b) with respect to w: ∂J(w,b)/∂w = 1/m * sum((fw,b(x)(i))-y(i))^2
+w=w-α*∂J(w,b)/∂w = w-α*(1/m * sum((fw,b(x)(i))-y(i))*x(i) (求导，对哪个求导，其余为常数)
+b=b-α*∂J(w,b)/∂b = b-α*(1/m * sum((fw,b(x)(i))-y(i))
+fw,b(x(i))=wx(i)+b
+when it come to more than one local minumum vs. when it come to one single global minumum (convex function) 
+20.4.6 运行梯度下降
+> batch gradient descent (批量梯度下降)：每一次更新参数，都适用整个训练集 
+由于每次都要使用整个训练集，计算量大，一般都用mini-batch gradient descent
+------------------------------------------ week 1
+------------------------------------------ week 2
+21.5.1 多类特征 (mlutile features/variables)
+fw,b(x)=w1x1+w2x2+...+wnxn+b, x1,x2,...,xn: features/variables, w1,w2,...,wn: parameters
+fw,b​(x)=w⋅x+b (here, w and x are vectors, dot product of two vectors, w and x, plus b)
+22.5.2 向量化 part 1 (vectorization): 
+> w=[w,w2, w3] n=3, b is a number, x=[x1,x2,x3] 
+linear algebra count from 1, 
+python code, count from 0: w=np.array([w0,w1,w2]), x=np.array([x0,x1,x2]), b=4
+without vectorization: 
+if n=3, fw,b(x)=w1*x1+w2*x2+w3*x3+b, in the code: f=w[0]*x[0]+w[1]*x[1]+w[2]*x[2]+b
+if n=100000, fw,b(x)=sum(w[j]*x[j]) +b, w and x are vectors here, j=1.....n, in the code:
+f=0 
+for j in range(0,n): 
+f=f+w[j]*x[j]
+f=f+b 
+with vectorization (more efficient, faster, less code): 
+fw,b(x)=w⋅x+b, here w and x are vectors, and dot product is used, in the code: f=np.dot(w,x)+b
+23.5.3 向量化 part 2
+> without verctorization vs. vectorization:
+for j in range (0, 16):
+f=f+w[j]*x[j] (#this run step by step, slow)
+np.dot(w,x) (#this run all at once, fast)
+
+24.5.4 多元线性回归的梯度下降法 (gradient descent for multivariable linear regression)
+> previous notation: 
+parameters: w1, ...., wn; b 
+model: fw,b(x)=w1x1+w2x2+...+wnxn+b, w and x here are vectors 
+cost function: J（w1,....wn, b)
+gradient descent: 
+repeat {wj​=wj​−α∂/∂wj*​J(w1​,⋯,wn​,b)
+b=b−α∂/∂b*​J(w1​,⋯,wn​,b)} )
+> vector notation: 
+parameters: w=[w1, w2, ...., wn]; b #w here is a vector
+models: fw,b(x)=w.x+b,here w and x are vectors, dot product is used
+cost function: J(w,b), w here is a vector
+gradient descent:
+{wj​=wj-α∂/∂wj*​J(w​,b) #括号里的w是vector 
+{b=b-α∂/∂b*​J(w​,b) #括号里的w是vector 
+
+one feature (单元变量): 
+repeat{
+    w= w-α*1/m * sum((fw,b(x)(i))-y(i))*x(i) #∂/∂w*​J(w​,b) =1/m * sum((fw,b(x)(i))-y(i))*x(i) 
+    b= b-α*1/m * sum((fw,b(x)(i))-y(i)) # simultaneuously update w, b
+}
+n features (多元变量):
+repeat{
+    w1=w1-α*1/m * sum((fw,b(x)(i))-y(i))*x1(i) #w1, x1 here are vector, 1/m * sum((fw,b(x)(i))-y(i))*x1(i)=∂/∂w1*​J(w​,b), w here is a vector
+    w2=w2-α*1/m * sum((fw,b(x)(i))-y(i))*x2(i) #w2, x2 here are vector, 1/m * sum((fw,b(x)(i))-y(i))*x2(i)=∂/∂w2*​J(w​,b), w here is a vector
+    ...
+    wn=wn-α*1/m * sum((fw,b(x)(i))-y(i))*xn(i) #wn, xn here are vector, 1/m * sum((fw,b(x)(i))-y(i))*xn(i) =∂/∂wn*​J(w​,b), w here is a vector
+    
+    b=b-α*1/m * sum((fw,b(x)(i))-y(i)) #w, and x here are vectors, wj(for j=1,....n) and b simutaneously updated 
+}
+> an alternative to gradient descent: normal equation:
+only for linear regression, solve for w, b without iterations
+disvantages: does not generalize to other learning algorithms, slow when number of features is large 
+# what you need to know: normal equation maybe used in machine learing libraries that implement linear regression, gradient descent is the recommended method for finding w, b; 
+
+26.6.2 特征缩放 part 1 (feature scaling): to make gradient descent faster 
+> relation between sizes of feature and size of associated parameters:
+price=w1x1+w2x2+b. #x1: size, x2: number of bedrooms 
+house: x1=2000, x2=5, price=$500k, size of parameters w1, w2?
+e.g., w1=50, w2=0.1, b=50, price=50*2000+0.1*5+50=$100k
+w1=0.1, w2=50, b=50, price=0.1*2000+50*5+50=$500k
+when plot relation between size and room number (scatter plot), relation between w1 and w2 (contour plot): 
+if you use the data as is to run the gradient descent, as the contour plot is tall and skiny, it end up with back and forth for long time before it find its ways to the global minimum:
+so it is suggested to rescale the feature and parameters to make the contour plot more circular, so that the gradient descent will converge faster
+!NB: the conclusion here is that when you have features with very different ranges, the gradient descent will take a long time to converge, so we need to scale the features to make them in similar ranges, so that the gradient descent will converge faster
+26.6.2 特征缩放 part 2
+> how to scale features? : 
+>>>
+if 300<=x1<=2000, x1scaled=x1/2000 to maximum range: 300/2000<=x1scaled<=2000/2000, 
+if 0<=x2<=5, x2scaled=x2/5 to maximum range: 0/5<=x2scaled<=5/5
+>>> mean normalization: 
+300<=x1<=2000, 0<=x2<=5: x1scaled=(x1-u1)/2000-300, x2scaled=(x2-u2)/5-0, u1=mean of x1, u2=mean of x2
+>>> z-score normalization:
+x1scaled=(x1-u1)/std(x1), x2scaled=(x2-u2)/std(x2)
+!NB: the aim is for about -1<=xj<=1 for each feature; -3<=xj<=3, -0.3<=xj<=0.3 are also acceptable, 0<=x1<=3, okay, -2<=x2<=0.5, okay, -100<=x3<=100, too large, need to rescale, -0.0001<=x4<=0.001, too small, need to rescale, 98.6<=x5<=105, too large, need to rescale 
+
+27.6.3 检查梯度下降是否收敛
+> the job of gradient descent is to find the best w, b to minumize the cost function J(w,b) 
+w, b are simutaneously updated 
+when make learning curve (x as iterations, y as J(w,b)),here w is vector, to find the best iteration number until J (w,b) likely conerged
+another way to decide if model is done training: automatic convergenece test:
+i.e., epsilon ε = 0.001, if j(w, b) decreased by <= ε in one iteration, declare convergence, but it is difficult to find the right epsilon. 
+28.6.4 学习率的选择
+> if learning rate is too small, it run slowly, if it is too large, it may not converge
+> identify problems with gradient descent:
+if the plot of J（w,b) with iterrations go up and down sometimes, meaning learning rate is too large or gradient descent not work properly
+if the plot of J（w,b) with iterrations consistently increase, meaning learning rate is too large or code is wrong (w1=w1+αd1), then use w1=w1-αd1 to fix it
+> value of leanring rate to try: 0.001, 0.01, 0.1, 1....
+or try 3*0.001, 3*0.01, 3*0.1, 3*1....
+
+29.6.5 特征工程 (feature engineering): choose right features to make algorithms work well 
+> e.g., x1: frontage of house, x2: depth of house
+fw,b(x)=w1x1+w2x2+b, w and x here are vectors 
+area =frontage*depeth 
+x3=x1x2 (#new feature)
+fw,b(x)=w1x1+w2x2+w3x3+b, w and x here are vectors 
+Feature engineering: using intution to design new features, by transforming or combing original features to make the learning algorithm  earsier to make accurate prediction 
+> feature engineering is not only for linear regression, but also for curve fitting, nonlinear function
+30.6.6 多项式回归 (multi-linear regression):
+> polynomila regression 
+e.g., 
+fw,b(x)=w1x+w2x^2 +b (x: size of house)
+fw,b(x)=w1x+w2x^2 + w3x^3+b (x: size of house)
+(when create feature with power of x, then the scaling of feature is becoming important, because the range of x^2 is much larger than the range of x, so we need to scale the features to make the gradient descent converge faster)
+e.g., 
+fw,b(x)=w1x+w2(square root of x) +b (another choice that may work also)
+> scikit-learn is imporatnt in machine learning 
+------------------------------------------ week 2
+------------------------------------------ week 3
+31.7.1 Motivations
+32.7.2 逻辑(logistic)回归: the single most widely used classification algorithm 
+> e.g., classify tumor (maglinant or benign) by x: tumor size, y: maglinant (1) or benign (0), setting a threshold (like 0.7), but the want output is either 0 or 1, never 0.7
+to build logistic regression (s-shape) algorithm, there is a function called sigmoid function (logistic function) :不像线性回归，概率可能为150% 或者-20%，它的概率范围总在0-1之间，且没有突然跳跃，容易求导，且单调递增，
+z=wx+b, f(x)=g(z), g(z)=1/(1+e^-z), g(z) is the sigmoid function
+sigmoid function: x轴是z，y轴是g(z)
+fw,b(x)=g(wx+b)=1/(1+e^-(wx+b)), w, b是vector
+fw,b​(x)=P(y=1∣x;w,b) #y是0或1，标签
+33.7.3 决策边界 (decision boundary): to map numbers that the models output to a prediction of whether y is 0 or 1 
+> set a threshold (like 0.5), if fw,b(x)>=0.5, predict y=1, if fw,b(x)<0.5, predict y=0
+meaning, when z=wx+b>=0, predict y=1, when z=wx+b<0, predict y=0
+> multiple features: 
+fw,b(x)=g(z)=g(w1x1+w2x2+b),  decision bounday:z=wx+b=0, if w1=1, w2=1, b=-3, z=x1+x2-3=0, so x1+x2=3 is the decision boundary. 
+> more compølicated cases:
+nonlinear decision boundary: 
+fw,b(x)=g(z)=g(w1x1^2+w2x2^2+b), if w1=1 w2=1, b=-1, decision boundary: z=x1^2+x2^2-1=0, so x1^2+x2^2=1 is the decision boundary, which is a circle
+fw,b(x)=g(z)=g(w1x1+w2x2+w3x1^2+w4x1x2+w5x2^2+w6x1^3+...+b), with irregular shape plot, when set the boundary,  set the outside shape equal to 0, inside shape equal to 1 
+
+34.8.1 逻辑回归的代价函数 (cost function for logistic regression)
+cost function: j(w,b)=1/m*sum(1/2(fw,b({x}(i))-y(i))^2):
+> in linear regression, fw,b(x)=wx+b, j(w,b) is a convex function, so gradient descent will always converge to the global minimum
+> in logistic regression, fw,b(x)=1/(1+e^-(wx+b)), j(w,b) is not a convex function, so gradient descent may not converge to a global minimum. so different cost function is needed. 
+L(fw,b(x(i), y(i)): logistic loss function, here x is vector, y is 0 or 1 
+= -log(fw,b(x(i)))=-log(f), if y(i)=1
+= -log(1-fw,b(x(i)))=-log(1-f), if y(i)=0, when plot, when f=1, -log(f) and log(f)=0
+
+35.8.2 逻辑回归的简化版代价函数 (simplified cost function for logistic regression)
+> L(fw,b(x(i) y(i))=-y(i)log(fw,b(x(i))-(1-y(i))log(1-fw,b(x(i))
+if y(i)=1, L(fw,b(x(i)), y(i))=-1log(f(x))
+if y(i)=0, L（fw,b(x(i)), y(i))=-(1-0)log(1-f(x)) 
+J(w,b)=-1/m(sum(y(i)log(fw,b(x(i))+(1-y(i))log(1-fw,b(x(i)))
+
+36.9.1 梯度下降实现 (gradient descent implementation for logistic regression)
+> repeat{
+    wj= wj-α*1/m * sum((fw,b(x)(i))-y(i))*xj(i) 
+    b= b-α*1/m * sum((fw,b(x)(i))-y(i)) # simultaneuously update w, b
+},# here, fw,b(x)=1/(1+e^-(wx+b))
+
+37.10.1 过拟合的问题 (overfitting problem) 
+> overfitting: fitting training data is over-perfect, generalization to new data is poor, high variable
+> underfit: does not fit well the training data enough, high bias 
+> fit: fits the training data well and generalizes to new data 
+38.10.2 解决过拟合
+> if overfitting with high variance, 1) collect more data, 2) if the you have many features, but nout enough training data, just select the most relevant features, it can solve the problems, but the disvantage is useful features could be lost 
+3) regularization:  
+e.g., f(x)=28x-385x^2+39x^3-174x^4+100, if overfitting, the parameters are relatively large, if remove some of features, the corresponding parameters will be 0, 
+if regularization (reduce size of parameters), the parameters are relatively small without eliminating some features, so the model is less likely to overfit
+39.10.3 正则化代价函数 (cost function with regularization)
+> if have 100 features, small w1, w2,....wn, bm simpler model, less likely to overfit, but we do not knwow which features are useful, so we keep all features, but reduce the size of parameters to make the model less likely to overfit
+J(w,b)=1/2(sum(fw,w(x(i))-y(i))^2) + λ/2m(sum(wj^2)) +  (λ/2m)*b^2 #lambda: regularization parameter, to minize J(w,b), λ>=0, if λ=0, no regularization, if λ is too large, underfit, if λ is too small, overfit 
+
+40.10.4 正则化线性回归 (regularization for linear regression)
+> regularization linear regression: J(w,b)=1/2(sum(fw,w(x(i))-y(i))^2) + λ/2m(sum(wj^2))
+to minimize it, gradient descent: 
+repeat {wj​=wj-α∂/∂wj*​J(w​,b) #j=1,....n 
+b=b-α∂/∂b*​J(w​,b)} #括号里的w是vector, wj, b are simutaneously updated 
+∂/∂wj*​J(w​,b) =1/m*sum((fw,b(x)(i))-y(i))*xj(i) 
+∂/∂b*​J(w​,b) =1/m*sum((fw,b(x)(i))-y(i))
+> when: 1/m*sum((fw,b(x)(i))-y(i))*xj(i) + λ/m*wj, j=1,....n 
+to implementing radient descent: 
+repeat{wj=wj-α*(1/m*sum((fw,b(x)(i))-y(i))*xj(i) + λ/m*wj), j=1,....n
+b=b-α*1/m*sum((fw,b(x)(i))-y(i))} simultaneuously update w, b
+wj=1wj-(α*λ/m)*wj-(α*1/m)*sum(fw,b(x(i))-y(i))*wj(i)
+1wj-(α*λ/m)*wj=wj(1-(α*λ/m)) : 
+alpha is small number, lamda is usually small number, if m=50, then the whole term will slightly less than 1, thus every single iteration, when wj multiply by a number slightly less than 1, it will reduce the size of wj, thus the model is less likely to overfit 
+
+41.10.5 正则化logistic回归 (regularization for logistic regression)
+> z=w1x1+w2x2+w3x2x1^2 + w4(x1^2)*(x2^2) + .....+b 
+fw,b(x)=1/(1+e^z) 
+J(w,b)=-1/m(sum(y(i)log(fw,b(x(i))+(1-y(i))log(1-fw,b(x(i))) + λ/2m(sum(wj^2)), how to minize cost function with regularization term?:
+repeat {wj​=wj-α∂/∂wj*​J(w​,b)
+b=b-α∂/∂b*​J(w​,b)} , 
+∂/∂wj*​J(w​,b)=1/m*sum((fw,b(x)(i))-y(i))*xj(i) + λ/m*wj, j=1,....n 
+/∂b*​J(w​,b)=1/m*sum((fw,b(x)(i))-y(i)) , fw,b() is logistic regression function 
+
+------------------------------------------ week 3
+------------------------------------------ week 4
+42.1.1 欢迎来到第二部分_高级学习算法 (advanced learning algorithms)
+> how to build machine learning system 
+-------------------------------------------neural networks
+43.1.2 神经元和大脑 (neurons and the brain)
+> neural networks: algorithms that try to minic the brain 
+speech--> images (computation vision)--> text (NLP)-->climate change, medicical image...... 
+neural networks used simplified mathmatical model of a neuron: 
+inputs---(computation)--->output (single neuron) to the second neuron 
+when building artificial neural networks or deep learning algorithm, we need to simulate many such neurons at the same time. 
+> why now?
+digitalization exploded, trandition machine learning algorithms (e.,g.,linear regression, logistic regression) are difficult to get performance to keep going up though fed with more data. 
+with tradition ai, the performance may be like a plateau,
+with small neural networks, the performance may be like a small hill,
+with medium neural networks, the performance may be like a medium hill,
+with large neural networks, the performance may be like a mountain
+so, if you have big data, powerful algorithms are needed
+
+44.1.3 需求预测 (demand prediction)
+> e.g., price as x, top seller (yes, no) as y to predict if clothes will be top seller or not 
+input: x ----> f(x)=1/1+e^-(wx+b) (equal to a neuron) --->output: a #probability of being topseller, then to the next neuron 
+let us say we have: affordability (price, shipping cost), awareness (marketing), perceived quality (material) 
+here we create a neuron (logistic regression unit to input price and shipping cost to estimate affordability), to create another neuron using marketing to estimate awareness, to create another neuron using material to estimate perceived quality, 
+then we wire the outputs of these three neurons to another neuron (another logistic regression unit) to input those three numbers and outputs the probability of being top seller 
+here, these three neurons are called layer (hidden layer/activation values), another neuron is also called layer (output layer)
+the four numbers (price, shipping cost, marketing, material) are called input layer 
+when building neural network here, we have 4 input layer, 3 hidden layer, 1 output layer, 
+to simplify here, we take four input features as vector x, then fed to the middle layer (activation values) to become another vector, then fed to output layers to output the probability 
+the hidden layers can be multiple layers 
+
+45.1.4 例子：图像识别 (face recognition) 
+> e.g., input: image x (vector of pixels) to the first hidden layer, then to the second hidden layers, then to the third hidden layer, then to the output layers to output the probability of being a person 'xyz'
+here: 
+the different neurons in the earlier hidden layers may be responsible for looking for like (edge, lines, orientation, etc)
+the different neurons in the next hidden layer might learn to group different segments of edges, orientation, etc. 
+the different neurons in the next hiddent layer might learn to detect larger face shapes 
+
+46.2.1 神经网络中的层 (layers in neural networks)
+> vector x(input layer) to the first hidden layer (w1, b1 in the first neuron to output activation value a1=g(w1x+b1); w2, b2 in the second neuron to output activation value a2=g(w2x+b2); w3, b3 in the third neuron to output activation values a3=g(w3x+b3); 
+
+47.2.2 更复杂的神经网络
+> e.g., founr layer model: input layer (x) to the first hidden layer (a1) to the second hidden layer (a2) to the third hidden layer (a3) to the output layer (a4),
+a^[1] （上标）: 第一层layer，a^[2] : 第二层layer，a^[3] : 第三层layer; a^[3]1 (下标): 第三层的第1个neuron 
+a1=g(w1x.a^[2]+b1), a2=g(w2.a^[2]+b2), a3=g(w3.a^[2]+b3), here wj, a are vectors, a1, a2, a3 are activation values),
+a^[3] =[a1,a2,a3]: meaning 3rd layer has 3 neurons, consisting of 3 activation values a1, a2, a3
+a1^[3]=g(w1^[3].a^[2] +b1^[3]), a2^[3]=g(w2^[3].a^[2] +b2^[3]), a3^[3]=g(w3^[3].a^[2] +b3^[3])
+> 神经网络核心公式：
+(aj^[l]=g(wj^[l].a^[l-1] +bj^[l])): 神经元计算公式/前向传播公式，计算计算第 l 层第 j 个神经元的输出
+
+48.2.3 推理：做出预测(前向传播) ： inference: making predictions (forward propagation@)
+> e.g., digit images (0 or 1): white and black, compute probability of being a handwritten '1':
+inut: layer 0 (feature) x (vector), layer 1 has 25 neurons, layer 2 has 15 neuron, layer 3 has 1 neuron, output: a^[3] (probability of being a handwritten '1')
+a^[1]=[g(w1^[1].x+b1^[1])........g(w25^[1].x+b25^[1])] : compute the activation values of the layer 1 
+a^[2]=[g(w1^[2].a^[1]+b1^[2])........g(w15^[2].a^[1]+b15^[2])] : compute the activation values of the layer 2
+a^[3]=[g(w1^[3].a^[2]+b1^[3])] : compute the activation values of the layer 3, which is the output layer, and a^[3] is the probability of being a handwritten '1', then 
+is a1^[3] >=0.5, predict '1', if a1^[3]<0.5, predict '0' 
+
+49.3.1 代码中的推理 (inference in code)
+> tensorflow /pytorch: often used in deep learning algorithms: here we use tensorflow: 
+e.g., coffee roasting: input x: temperatures, duration, output: probability of being a good coffee: is a1^[2]>=0.5? 
+x=np.array([[200., 17.]]) 
+layer_1=Dense(units=3, activation='sigmoid') #(here, 3 neurons in the first hidden layer) 
+a1=layer_1(x) #is a vector including 3 activation values 
+layer_2=Dense(units=1, activation='sigmoid') #(here, 1 neuron in the second hidden layer)
+a2=layer_2(a1)
+if a2>=0.5: yhat=1, else: yhat=0 
+
+e.g., model for digit classification: 
+x=np.array([[0., 245., 240., 0.]])
+layer_1=Dense(units=25, activation='sigmoid') 
+a1=layer_1(x) 
+layer_2=Dense(units=15, activation='sigmoid')
+a2=layer_2(a1)
+layer_3=Dense(units=1, activation='sigmoid')
+a3=layer_3(a2)
+if a3>=0.5: yhat=1, else:yhat=0
+
+50.3.2 TensorFlow中的数据 (data in tensorflow): handle large dataset, more efficient
+> how to represent data in tensorflow: inconsistency between tensorflow and numpy 
+feature vectors: x=np.array([[200., 17.]]) #numpy array, shape=(1,2), 1 row, 2 columns
+numpy array:
+[1 2 3
+4 5 6]: 2 rows, 3 columns, shape=(2,3), 2x3 matrix 
+x=np.array([[1.,2.,3.], [4.,5.,6.]]) #numpy array, shape=(2,3), 2 rows, 3 columns 
+x=np.array([[2000., 17.]]) # shape=(1,2), 1 row, 2 columns 
+x=np.array([[2000.]], 
+[[17.]]) # shape=(2,1), 2 rows, 1 column 
+activation vectors: 
+x=np.array([[200., 17.]])
+layer_1=Dense(units=3, activation='sigmoid')
+a1=layer_1(x) #[[0.2, 0.7, 0.3]]
+tf.Tensor([[0.2 0.7 0.3]], shape=(1,3), dtype=float32)
+a1.numpy() #transform to numpay array from tensorflow tensor 
+array([[1.4666, 1.1231, 3.2111]], dtype=float32) 
+layer_2=Dense(units=1, activation='sigmoid') 
+a2=layer_2(a1) #1x1 matrix 
+tf.tensor([[0.8]], shape=(1,1), dtype=float32)
+a2.numpy() #turn it back to numpy arrary
+array([[0.8]], dtype=float32) 
+
+51.3.3 构建一个神经网络 (in tensorflow)
+> building a neural network architecture:
+layer_1=Dense(units=3, activation='sigmoid')
+layer_2=Dense(units=1, activation='sigmoid') 
+#instead of manually take data and passing it from layer 1 and take activation from layer 1 to layer 2
+model=Sequential([layer_1, layer_2]) #ask tensorflow to do it automatically 
+e.g., 
+x=np.array([[200., 17.], [120., 5.], [425., 20.], [212., 18.]])
+y=np.array([1, 0, 0,1]) #targets 
+model.compile(...)
+model.fit(x,y) 
+model.predict(x_new) #tensorflow will automatically do the forward propagation for you 
+e.g., digit classification model:
+layer_1=Dense(units=25, activation='sigmoid')
+layer_2=Dense(units=15, activation='sigmoid')
+layer_3=Dense(units=1, activation='sigmoid')
+model=Sequential([layer_1, layer_2, layer_3])
+# model =Sequential([Dense(units=25, activation='sigmoid'), Dense(units=15, activaation='sigmoid'), Dense(units=1, activation='sigmoid')])
+model.compile(...)
+x=np.array([[0...,245,...,17], [0..., 200, ..., 184]])
+y=np.array([1,0])
+model.fit(x,y)
+model.predict(x_new) 
+
+52.4.1 在一个单层中的前向传播 (forward prop in a single layer)
+> e.g., coffee roasting model: 
+x=np.array([200, 17])
+#layer 1: 3 neurons
+a1^[1]=g(w1^[1].x+b1^[1]) a2^[1]=g(w2^[1].x+b2^[1]) a3^[1]=g(w3^[1].x+b3^[1])
+w1_1=np.array([1,2]) w1_2=np.array([-3,4]) w1_3=np.array([5,-6])
+b1_1=np.array([-1])  b1_2=np.array([1])  b1_3=np.array([2])
+z1_1=np.dot(w1_1, x)+b z1_2=np.dot(w1_2, x)+b z1_3=np.dot(w1_3, x)+b
+a1_1=sigmoid(z1_1) a1_2=sigmoid(z1_2) a1_3=sigmoid(z1_3)
+a1=np.array([a1_1, a1_2, a1_3])
+#layer 2: 1 neuron
+a1[2]=g(w1^[2].a^[1]+b1^[2]) 
+w2_1=np.array([-7,8])
+b2_1=np.array([3])
+z2_1=np.dot(w2_1, a1)+b2_1
+a2_1=sigmoid(z2_1) 
+
+53.4.2 前向传播的一般实现 (general implementation of forward prop)
+> forward prop in mumpy: 
+w1^[1]=[1,2]; w2^[1]=[-3,4]; w3^[1]=[5,-6]
+W=np.array([[1, -3, 5], [2, 4, -6]]) #2x3 matrix, 2 rows, 3 columns, 2 features, 3 neurons 
+b1^[1]=-1, b2^[1]=1, b3^[1]=2
+b=np.array([-1, 1, 2]) #1x3 matrix
+a^[0]=x 
+a_in=np.array([-1, 4]) 
+
+def dense(a_in, W， b, g): 
+units=W.shape[1] 
+a_out=np.zeros(units)
+for j in range(units):
+w=W[:, j]
+z=np.dot(w, a_in) +b[j]
+a_out[j]=g(z)
+return a_out 
+
+def sequential(x):
+a1=dense(x, W1, b1)
+a2=dense(a1, W2, b2)
+a3=dense(a2, W3, b3) 
+a4=dense(a3, W4, b4) 
+f_x=a4
+return f_x #W refer to a matrix 
+
+54.5.1 是否有路通向AGI(通用人工智能)
+> relation between neural networks and AGI: 
+AI: include ANI (artificial narrow intelligence: web-search, smart speaker, self-driving, AI in farming, etc) and AGI (artificial general intelligence, AI system can do anything a human can do) 
+
+------------------------------------------ week 4
+------------------------------------------ week 5
+55.6.1 神经网络如何高效实现 (efficient implementation of neural networks)
+>  for loops vs. vectorization: 
+for loops:
+x=np.array([[200., 17.]]) #1x2 matrix, 1 row, 2 columns, 1 sample, 2 features 
+W=np.array([[1, -3, 5], [2, 4, -6]]) #2x3 matrix, 2 rows, 3 columns, 2 features, 3 neurons
+b=np.array([-1, 1, 2]) #1x3 matrix, 
+def dense(a_in, W, b): 
+a_out=np.zeros(units)
+for j in range(units):
+w=W[：，j]
+z=np.dot(w,x) + b[j]
+a[j]=g(z) 
+return a 
+
+vectorization:
+X=np.array([[200.,17]])
+W=np.array([[1, -3, 5], [2, 4, -6]])
+B=np.array([[-1, 1, 2]])
+def dense(A_in, W, B):
+Z=np.matmul(A_in, W)+B 
+A_out=g(Z)
+return A_out 
+
+56.6.2 矩阵乘法 (matrix multiplication)
+> Dot products between vectors: 
+e.g., [1,2] * [3, 4] =(1*2) + (2*4)=[1*3, 2*4]=[3, 8]#不符矩阵乘法要求，左边列数等于右边行数
+np.dot(a,b)=[1,2] * [3, 4] =(1*3) + (2*4)=[1*3+2*4]=[11] #正确，一维x一维=点积
+
+so in general:
+[a]*[w]=a1*w1+a2*w2+...+an*wn, where a and w are vectors
+> vector-matrix multiplication:
+a = np.array([[1],[2]]) #2x1 matrix
+a.T= [[1 2]] #1x2 matrix
+W=np.array([[3,4], [5,6]])
+#矩阵乘法要求：左边列数等于右边行数，左边取一行，右边取一列 （左边一行*右边一列）
+Z=a.T*W=[[1 2]]*[[3,4], [5,6]]=[1, 2]*[[3,4],[5,6]]=[1*3+2*5, 1*4+2*6]=[13,16] 
+[[3,4], [5,6]]*[[1 2]] #左边列数=2， 右边行数=1， 不能乘
+A=[[1, -1], [2, -2]] A.T=[[1, 2], [-1, -1]] 
+W=[[3, 5],[4,6]]
+A.T*W=[[1,2],[-1,-1]]*[[3,5],[4,6]]=[[1*3+2*4, 1*5+2*6],[-1*3-1*4,-1*5-1*6]]=[[11, 17], [-7, -11]]
+
+57.6.3 矩阵乘法的规则
+> 左右列数=右边行数，乘积：左边分别取一行，右边分别取一列，相乘加和，得到一个数，左边行数x右边列数=乘积矩阵的行数x列数）
+> 转置： 行变列，列变行, (i,j) ---> (j,i)）
+A=[[1,-1, .1], [2, -2,0.2]], A.T=[[1,2],[-1,-2],[0.1, 0.2]] 
+
+58.6.4 矩阵乘法代码 (matrix multiplication in code)
+> matrix multiplication in numpy:
+A=np.array([1, -1, 0.1], [2, -2, 0.2]) W=np.array([3, 5,7,9], [4, 6, 8, 0])
+A.T=np.array([1,2], [-1, -2], [0.1, 0.2]) 
+Z=np.matmul(A.T, W) =A.T @ W = [[11,17,23,9], [-11,-17,-23,-9], [1.1, 1.7, 2.3, 0.9]]
+> dense layer vectorized: 
+AT=np.array([200,17]]) #A.T=[200, 17]
+W=np.array([[1,-3,5],[-2, 4, -6]]) #W=[[1,-3,5],[-2,4,-6]] 
+b=np.array([[-1, 1, 2]])
+Z=A.T*W+B=[[165, -531, 900]] #注意，[[165, -531, 900]]不等于[165, -531, 900]，equal to [165 −531 900]
+#if funtion g applied sigmoid function to these three element-wise, then 
+A=g(Z)=[1 0 1]?：
+g(165)=1/(1+e^-165)≈1, g(-531)=1/(1+e^531)≈0, g(900)=1/(1+e^-900)≈1, so A=[1 0 1]
+
+in code:
+def dense(AT, W,b, g): #AT=a_in 
+z=np.matmul(AT, W) +b 
+a_out=g(z)
+return a_out # [[1,0,1]] 
+
+------------------------------------------ week 5
+------------------------------------------ week 6
+59.7.1 TensorFlow实现
+> train a neural network in tensorflow:
+e.g., x, layer 1 (25 neurons), layer 2 (15 neurons), layer 3 (1 neuron):
+import tensorflow as tf
+from tensorflow.keras import Sequential 
+from tensorflow.keras.layers import Dense
+model=Sequential([Dense(units=25, activation='sigmoid') 
+Dense(units=15, activation='sigmoid'), Dense(units=1, activation='sigmoid')
+Dense(units=1, activation='sigmoid')]) #speficy model
+from tensorflow.keras.losses import BinaryCrossentropy 
+model.compile(loss=BinaryCrossentropy（）) #compile model, speficiy loss function 
+model.fit(X,Y, epochs=100) #epochs: numers of steps in gradient descent; train model
+
+60.7.2 训练细节 
+> model training steps: 
+step1: specificy how to ocmpute output given input x and parameters w, b, fw,b(x)=?
+e.g., logistic regression: z=np.dot(w,x)+b, f_x=1/(1+np.exp(-z)) 
+step2: speficy loss and cost: 
+lost function: L(fw,b(x),y), cost function: J(w,b)=(1/m)*sum(L(Fw,b(x^(i),y^(i))))
+e.g., logistic loss: loss=-y*np.log(f_x)-(1-y)*np.lost(1-f_x), 
+step3: train on data to minimize J(w,b)
+e.g., w=w-alpha*dj_dw, b=b-alpha*dj_db (alpha: learning rate) 
+> train a neural network in tensorflow:
+ model =Sequential([Dense(....), Dense(....), Dense(....)]) #specify model
+ #binary cross entropy
+ model.compile(loss=BiNARYcrossentropy()) #compile model, specify loss function
+ model.fit(X,Y, epochs=100) #epochs: numbers of steps in gradient descent;
+e.g., 
+# step1: create model:
+import tensorflow as tf
+from tensorflow.keras import Sequential
+from tensorflow.keras.layer import Dense 
+model=Sequential([Dense(units=25, activation='sigmoid'), Dense(units=15, activation='sigmoid'), Dense(units=1, activation='sigmoid')])
+# step2: lostt and cost function: 
+#e.g., mnist digit classification problem (binary classification): 
+L(f(x),y)=-ylog(f(x))-(1-y)log(1-f(x)) #compare prediction vs. target, f(x) is the output of neural network, y is the target label 
+# above is known as binary cross entropy loss function, which is the same as logistic loss function  
+model.compile(loss=BinaryCrossentropy())# from tensorflow.keras.losses import BinaryCrossentropy
+##in case to solve regression problem than classification problem: 
+##%e.g., regression problem, to minimize square error loss: 
+model.compile(loss=MeanSquareError())
+##cost function: 
+J(W,B)=(1/m)*sum(L(f(x^(i),y^(i)) #W^[1], W^[2], W^[3], b^[1], b^[2], b^[3] are all parameters to be optimized
+#in tensorflow, the above is called cross-entropy loss function (binary cross entropy function)
+# step3: minimize cost function: gradient descent: 
+repeat{
+    wj^[l]=wj^[l]-(alpha*∂/∂wj)*J(w,b) 
+    bj^[l]=bj^[l]-(alpha*∂/∂bj)*J(w,b)}
+##% key thing in using gradient descent is to compute derivative for gradient descent using 'backpropagation': 
+model.fit(X,Y, epochs=100) 
+> neural network libraries: tensorflow, pytorch, etc.
+
+61.8.1 sigmoid的替代品
+> Demand prediction example:
+x: price, shipping cost, marketing, material 
+layer 1: affordability, awareness, perceived quality 
+output layer: probability of being a top seller 
+a2^[1]=g(w2^[1].x+b2^[1]) =g(z)
+sigmoid function: g(z)=1/(1+e^-z) #0<g(z)<1 , another function:
+g(z)=max(0,z) #if z<0, g(z)=0, if z>=0, g(z)=z, called ReLU (recitified linear unit) function 
+#another function: 
+g(z)=z #(linear activation function: no activation function), a=g(z)=w.x+b
+
+62.8.2 选择激活函数
+> when choosing activation function for output layer: depens on target or ground truth label:
+e.g., 
+classification problem: sigmoid function (y=0/1)
+regression problem: linear activation function (y=+/-)
+if y can only take only non-negative values, like predicting house price, then: ReLU function (y=0/+)
+> how about hidden layers? 
+# choosing g(z) for hidden layers of a neural network: 
+Most common/default choice: ReLU function, g(z)=max(0,z) #faster
+Sigmoid function is the exception for binary classification problem 
+# steps
+from tf.keras.layers import Dense 
+model=Ssequential([Dense(units=25, activation='relu'), #layer 1
+Dense(units=15, activation='relu'), #layer 2
+Dense(units=1, activation='sigmoid')]) #output layer
+> other activation functions: tanh, leaky ReLU, swish 
+
+63.8.3 为什么我们需要激活函数
+> if no activation function, then the neural network is just a linear regression model, no matter how many layers you have, it will be equivalent to a single layer model, thus we need activation function to make the neural network non-linear, so that it can learn more complex patterns in data 
+> do not use linear activation function for hidden layers.
+
+64.9.1 多类 (multiclass classification): classification with more than 2 possible output labels 
+> example: in x1-x2 plane, four clusters: P(y=1|x), P(y=2|x), P(y=3|x), P(y=4|x)
+
+65.9.2 Softmax regression algorithm: generalization of logistic regression algorithm, to be able to carry out multiclass clssfication probem 
+> it is a generalization of logistic regression, which is a binary classification algorithm to multi-cost classcification context 
+> 
+logistic regression: #two output values (1 or 0):
+z=w.x+b, a=g(z)=1/(1+e^-z), a1=P(y=1|x), a2=P(y=0|x)=1-a1 #w, x here are vectors
+softmax regression: # i.e., 4 possible output vales (1, 2, 3, 4):
+z1=w1.x+b1, z2=w2.x+b2, z3=w3.x+b3, z4=w4.x+b4 
+a1=g(z1)=e^z1/(e^z1+e^z2+e^z3+e^z4)=P(y=1|x) 
+a2=g(z2)=e^z2/(e^z1+e^z2+e^z3+e^z4)=P(y=2|x) 
+a3=g(z3)=e^z3/(e^z1+e^z2+e^z3+e^z4)=P(y=3|x)
+a4=g(z4)=e^z4/(e^z1+e^z2+e^z3+e^z4)=P(y=4|x)
+# a1+a2+a3+a4=1 
+> general case （N possible outputs): y=1, 2, ....N：
+zj=wj.x+bj, j=1, 2, ....N #w, x here are vectors
+aj=e^zj/sum(e^zk)=P(Y=j|x) 
+a1+a2+...+aN=1 
+> how to specify cost function for softmax regression:
+logistic regression: z=w.x+b, a1=g(z)=1/(1+e^-z)=P(y=1|x), a2=1-a1=P(y=0|x), loss=-ylog(a1)-(1-y)log(1-a1), J(w,b)=average loss 
+softmax regression: a1=e^z1/(e^z1+e^z2+..+e^zN), ..., aN=e^zN/(e^z1+e^z2+...+e^zN), loss(a1, ....aN, Y)={-loga1 if y=1, -loga2 if y=2,.....-logaN if y=N}
+if y=j, loss=-log(aj), the function is called crossentropy loss function, with a curve shape, as aj approaches 0, the loss L approach infinity, as aj approach 1, the loss L approac 0
+
+66.9.3 神经网络的Softmax输出 (neural network with softmax output)
+> to build a neural network that carry out multi-class classfication, we take the softmax regression model to put into the output layers of a neural network: 
+e.g., handwriten digit recognition with 10 class: 
+z1=w1.a^[2]+b1, a1=e^z1/(e^z1+e^z2+....+e^z10)=P（y=1|x) 
+....
+z10=w10.a^[2]+b10, a10=e^z10/(e^z1+e^z2+...+e^z10)=P（y=10|x) 
+in logistic regression: 
+a1^[3]=g(z1^[3]), a2^[3]=g(z2^[3]) 
+in softmax regression:
+a^[3]=(a1^[3],....a10^[3])=g(z1^[3]....z10^[3])
+> code: 
+import tensorflow as tf 
+from tensorflow.keras import Sequential 
+from tensorflow.keras.layers import Dense 
+model=Sequential([
+Dense(units=25, activation='relu'),
+Dense(units=15, activation='relu'), 
+Dense(units=10, activation='softmax')]) #step1:specify model
+from tensorflow.keras.losses import SparseCategoricalCrossentropy 
+model.compile(loss=SparseCategoricalCrossentropy()) #specify loss and cost  
+model.fit(X,Y, epochs=100) # train data to minimize J(w,b) 
+
+67.9.4 softmax的改进实现 (improved implementation of softmax)
+> Numerical roundoff errors (舍入误差)
+e.g., two ways of computng same quantiy in computer: 
+option1: x=2/10000, option2: x=(1+1/10000) -(1-1/10000) #to simplify this expression: 
+# in jupyter note : 
+x1=2/10000 print(f"{x1:.20f}") #0.00020000000000000000
+x2=(1+1/10000)-(1-1/10000) print(f"{x2:.20f}") #0.00019999999999999999 
+### to improve softmax implementation: 
+e.g., 
+logistic regression: a=g(z)=1/(1+e^-z), loss=-ylog(a)-(1-y)log(1-a), more accurate loss (in code): loss=-ylog(1/(1+e^-z))-(1-y)log(1-1/(1+e^-z))
+ model=Sequential([Dense(units=25, activation='relu'), Dense(units=15, activation='relu'), Dense(units=10, activation='sigmoid')])
+ #model.compile(loss=BinaryCrossentropy() 
+model.compile(loss=BinaryCrossentropy(from_logits=True)) #from_logits=True: to improve numerical roundoff errors
+#以上流程解决每个类别独立判断（图片有a，b，c，d？每个答案是yes or no，互相独立)：
+## 图片--> dense(25, relu)--> dense(15, relu)--> dense(10, sigmoid)--> a1,....a10 (概率）-->  loss: BinaryCrossentropy(from_logits=True)
+softmax regression: (a1,....a10)=g(z1,....z10), loss=L(a, y)=-log(a1) if y=1, ...-log(a10) if y=10, more accurate: L(a,y)=-log(e^z1/e^z1+....+e^z10) IF y=1, -log(e^z10/(e^z1+....+e^z1+) if y=1, in code: 
+ model=Sequential([Dense(units=25, activation='relu'), Dense(units=15, activation='relu'), Dense(units=10, activation='softmax')]) #网络最后输出是概率
+ #model.compile(loss=SparseCategoricalCrossentropy())
+ model.compile(loss=SparseCategoricalCrossentropy(from_logits=True)) #from_logits=True: to improve numerical roundoff errors
+#以上的流程解决数字识别（图片只能是0 or 1 or 2 or ... or 9），不能同时属于两种类别： 
+## x--> dense(25, relu)--> dense(15, relu)--> dense(10, softmax) --> 最后一层先得到z1，...z10（数），然后经过softmax得到a1，。。。。a10 (概率）-->loss
+import tensorflow as tf 
+from tensorflow.keras import Sequential 
+from tensorflow.keras.layers import Dense
+model=Sequential([
+    Dense(units=25, activation='relu'),
+    Dense(units=10, activation='relu'),
+    Dense(units=10, activation='linear')])#here if change to linear from 'softmax', then the final layer not longer output these probabilities A1 to A10 （概率）, but output logits Z1 to Z10（数）, 神经网络还没有把它们转化成概率
+from tensorflow.keras.losses import SparseCategoricalCrossentropy 
+model.compile(loss=SparseCategoricalCrossentropy(from_logits=True)) 
+model.fit(X,Y, epochs=100)
+logits=model(x)
+f_x=tf.nn.softmax(logits) 
+#以上的流程解决数字识别问题：
+## x-->dense(25, relu)-->dense(10, relu)-->dense(10, linear)-->logits Z1 to Z10-->sparecategoricalcrossentropy (from_logits=true)-->f_x=tf.nn.softmax(logits) ，最后输出概率
+model=Sequential([
+    Dense(units=25, activation='sigmoid'),
+    Dense(units=10, activation='sigmoid'),
+    Dense(units=10, activation='linear')])#here if change to linear from 'softmax', then the final layer not longer output these probabilities A1 to A10, but output logits Z1 to Z10, 
+from tensorflow.keras.losses import BinaryCrossentropy 
+model.compile(loss=BinaryCrossentropy(from_logits=True)) 
+model.fit(X,Y, epochs=100)
+logit=model(x)
+f_x=tf.nn.sigmoid(logit) 
+#以上的流程解决每个类别独立判断问题：
+## x-->dense(25, sigmoid)-->dense(10, sigmoid)-->dense(10, linear)-->logits Z1 to Z10-->binarycrossentropy (from_logits=true)-->f_x=tf.nn.sigmoid(logit), 输出概率
+> summary：
+二分类（只有两个类别），最后一层activation： sigmoid， loss：binarycrossentropy（）,最后输出是概率（0-1） 
+二分类（tensorflow推荐），最后一层activation： linear， loss: binarycrossentropy(from_logits=True), 最后输出是logits（数） 
+多标签分类（图片可以同时有狗猫车等），最后一层activation：sigmoid， loss: binarycrossentropy(), 最后输出是概率（每一个类别一个概率）
+多标签分类（tensorflow推荐），最后一层activation：linear， loss: binarycrossentropy(from_logits=True), 最后输出是logits（每一个类别一个数） 
+多分类（只能属于一个类别，数字识别，猫，狗，鸟分类），最后一层activation：softmax， loss: sparsecategoricalcrossentropy(), 最后输出是概率（一组概率，综合为1）
+多标签分类（tensorflow推荐），最后一层activation：linear， loss: sparsecategoricalcrossentropy(from_logits=True), 最后输出是logits（数）
+activation的作用：
+relu：输入z，输出max（0，z)， 隐藏层
+sigmoid：输入一个z，输出一个概率（0-1），二分类，多标签分类的输出层
+softmax：数组一组z，输出一组概率（总和为1）。多分类（只能属于一个类别）的输出层
+linear：输入z，输出z（什么都不做），想直接输出logits，让loss内部处理sigmoid，softmax
+loss的作用：
+BinaryCrossentropy	二分类、多标签分类	每个类别都是独立的是/否判断。
+SparseCategoricalCrossentropy	多分类（只能一个类别）	所有类别互斥，只能预测其中一个。
+from_logits=True：是告诉tensoflow，输出的是logits，不是概率
+
+68.9.5 多个输出的分类(classification with multiple outputs): multi-label classification problem:
+> e.g., in three pictures,
+is there a car?  
+is there a bus?
+is there a pedestrian? 
+yes, no, yes=[1,0,1], no, no, yes=[0,0,1], yes, yes, no=[1,1,0]。。。。how to build a neural network for multi-label classification problem?
+1) first build a neural network to decide are there any cars? second one to detect bus, third one to detect pedestrian 
+2) train a single neural network simultaneuously to detect all three labels:
+input x, first layer a1, second layer a2, output layer a3 (three neurons, using sigmoid function for each of three nodes in the output layer): a^[3]=[a1^[3], a2^[3], a3^[3]]=[P(car|x), P(bus|x), P(pedestrian|x)]
+> multi-class classification vs. multi-label classification 
+(softmax+sparsecategoricalcrossentropy) vs. (sigmoid+binarycrossentropy)
+
+69.10.1 高级优化方法 (advanced optimization): train data faster than gradient descent
+> wj=wj-alpha*∂/∂wj)*J(w,b) #w is a vector, alpha is learning rate 
+when plot cost function J(w,b) as contour plot, the minumum of cost function is the center of the plot
+if start the gradient descent from a point far away from the minimum, then it will take a long time to reach the minimum, because the gradient descent will take small steps to reach the minimum
+Adam algorithm can help make learning rate adaptive, so that it can take larger steps when far away from the minimum, and smaller steps when close to the minimum, thus it can reach the minimum faster than gradient descent
+> Adam algorithm: adaptive moment estimation, not just use single global learning rate alpha, also use different learning rate for every single parameter of model:
+w1=w1-alpha1*∂/∂w1)*J(w,b) 
+...
+w10=w10-alpha10*∂/∂w10)*J(w,b)
+b=b-alpha11*∂/∂b)*J(w,b)  
+so here Adam algorithm can use 11 differen learning rates here 
+if wj(or b) keep moving in same direction, increase alphaj
+if wj(or b) keep oscillating back and forth, reduce alphaj 
+>MNIST Adam 
+model=Sequential([Dense(units=25, activation='sigmoid'), Dense(units=15, activation='sigmoid'), Dense(units=10, activation='linear')])
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
+loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True))
+model.fit(X,Y, epochs=100) #train model using Adam optimizer, learning rate=0.001
+
+70.10.2 Additional Layer Types
+> layer types:
+dense layer: fully connected layer, each neuron in the layer is connected to all neurons in the previous layer
+convolutional layer: each neuron in the layer is connected to a small region of the previous layer (less training data, less prone to overfitting, faster computation) 
+> convolutional neural network (CNN): a neural network that uses convolutional layers, used for image classification, object detection, etc. 
+e.g., EKG (electrocardiogram) signal classification: giving signal over time to detect whether disease or not
+input x: EKG signal over time (x1-x20, x11-d30, x21-s40...x80-x100) 
+first hidden layer: first neuron, looking at the window x1-x20, second neuron looking at the window x11-x30, third neuron looking at the window x21-x40, fourth neuron looking at the window x31-x50, fifth neuron looking at the window x41-x60, sixth neuron looking at the window x51-x70, seventh neuron looking at the window x61-x80, eighth neuron looking at the window x71-x90, ninth neuron looking at the window x81-x100
+second hidden layer: first neuron looking at a1^[1]-a5^[1], second neuron looking at a3^[1]-a7^[1], third neuron looking at a5^[1]-a9^[1] 
+output layer: a^[2] get input to sigmoid unit to output probability of disease or not 
+
+------------------------------------------ week 6
+------------------------------------------ week 7
+71.11.1 决定下一步做什么
+> debugging a learning algorithm: 
+e.g., J(w, b)=(1/2)*(sum((f(x^(i))-y^(i))^2) + (lambda/2m)*sum(wj^2) #linear gression on housing price
+try: get more training data, try smaller set of features, try additional features, try adding polynomial features, try decrease lambda, try increase lambda to reduce prediction error
+> machine learning diagnostics: 
+
+72.11.2 模型评估 (model evaluation):
+> e.g., housing price prediction (x1=size in feet^2, x2=# of bedrooms, x3=# of floors, x4=age of house) 
+model fit training data well, but fail to generalize to new data, 
+with more features, it is harder to plot fw,b(x) vs. y: 
+use like 70% of data to train model, 30% of data to test model, we say:
+training set: (x^[1], y^[1]), (x^[2], y^[2]), ..., (x^[mtrain], y^[mtrain])
+test set: (xtest^[1], ytest^[1]), (xtest^[2], ytest^[2]), ..., (xtest^[mtest], ytest^[mtest])
+> Train/test procedure for linear regression (with squared error cost) :
+minimizecost function: J(w,b)=min[(1/2mtrain)*sum(fw,b(x^[i])-y^[i])^2+(lambda/2mtrain)*sum(wj^2)] 
+compute test error: Jtest(w,b)=(1/2mtest)*[sum(fw,b(xtest^[i])-ytest^[i])^2]
+compute training error: Jtrain(w,b)=(1/2mtrain)*[sum(fw,b(xtrain^[i])-ytrain^[i])^2]
+> train/test procedure for classification problem (o/1):
+J(w,b)=(-1/m)*sum[y^[i]*log(fw,b(x^[i])) + (1-y^[i])*log(1-fw,b(x^[i]))] + (lambda/2m)*sum(wj^2) 
+test error: Jtest(w,b)=(-1/mtest)*sum[ytest^[i]*log(fw,b(xtest^[i])) + (1-ytest^[i])*log(1-fw,b(xtest^[i]))] 
+train error: Jtrain(w,b)=(-1/mtrain)*sum[ytrain^[i]*log(fw,b(xtrain^[i])) + (1-ytrain^[i])*log(1-fw,b(xtrain^[i]))]
+
+there is a more common way to be used for definition of j test and j train in classification problem in terms of test error: 
+fraction of the test set and fraction of train set that the alogorithm has misclassified: 
+y-hat=1 if fw,b(x^[i])>=0.5, y-hat=0 if fw,b(x^[i])<0.5
+and then count up in the test set the fraction of example where y-hat!=y (groud truth label)
+Jtest(w,b): fraction of test set that has been misclassified 
+Jtrain(w,b): fraction of train set that has been misclassified 
+
+73.11.3 模型选择和训练交叉验证测试集
+> once w,b are fit to the training set, the training error is likely lower than actual generalization error, while test error is better estimate of how well the model will generalize to new data than train error 
+> model selection (not recommended flawed): e.g. house price prediction
+1. fw,b(x)=w1.x1+b #--> w1, b1--> Jtest(w1, b1)
+2. fw,b(x)=w1.x1+w2.x^2+b #second-order polynomial-->w2, b2--> Jtest(w2, b2)
+3. fw,b(x)=w1.x1+w2.x^2+w3.x^3+b #third-order polynomial-->w3, b3--> Jtest(w3, b3)
+.....
+10. fw,b(x)=w1.x1+w2.x2^2+....+w10.x^10+b #tenth-order polynomial-->w10, b10--> Jtest(w10, b10)
+look at these Jtest, and see which is the lowest, and choose that model, then report test set error Jtest(w,b), but it is little optimistic to estimate generalization error,becauase we fit an extra parameter (order of polynomial) to test set
+> model selection (recomended): 
+spilt data into training set, cross-validation set, test set: e.g., 60% training, 20% cross-validation, 20% test set 
+(x^[1],y^[1]), ....(x^[mtrain], y^[mtrain]) 
+(xcv^[1], ycv^[1]),.....(xcv^[mcv], ycv^[mcv])
+(xtest^[1], ytest^[1]),.....(xtest^[mtest], ytest^[mtest])
+cross-validation set (validation set/development set/dev set): extra data set used to cross-check validity or accuracy of model 
+>> traning/validation/test: 
+training error: Jtrain(w,b)=(1/2mtrain)*sum(fw,b(x^[i])-y^[i])^2 
+cross-validation error: Jcv(w,b)=(1/2mcv)*sum(fw,b(xcv^[i])-ycv^[i])^2 
+test error: Jtest(w,b)=(1/2mtest)*sum(fw,b(xtest^[i])-ytest^[i])^2  
+use the same 10 models as above to fit the parameters w, b, then compute Jcv(w,b) for each model, and choose the model with the lowest Jcv(w,b), then estimate generalization error by computing Jtest(w,b)
+this method also work for choosing other types of models: e.g., choosing a neural network architecture:
+fit W, B for each layer, compute Jcv(w,b) for each layer, choose the layer with the lowest Jcv(w,b), then estimate generalization error by computing Jtest(w,b) 
+> only use training set, cross validation set to choose model and use test set to estimate generalization performance of model
+
+74.12.1 诊断偏差和方差 (diagnosing bias and variance)
+> Bias/Variance: 
+#if fit in linear regression, d=1, fw,b(x)=w1.x+b  (d: degree of polynomial)
+bias: high bias（underfitting), low bias (overfitting) 
+#if fit in 4th-orderpolynomial regression, d=4, fw,b(x)=w1x+w2x^2+w3x^3+w4x^4+b 
+variance: high variance (overfitting), low variance (underfitting) 
+#if fit in quadratic polynomial regression: d=2, fw,b(x)=w1x+w2x^2+b
+'just right' bias and variance 
+##instead, to use a more systematic way to diagnose bias and variance, we can compute Jtrain and Jcv:
+fw,b(x)=w1.x+b # underfit: Jtrain high, Jcv high 
+fw,b(x)=w1x+w2x^2+w3x^3+w4x^4+b #overfit: Jtrain low, Jcv high 
+fw,b(x)=w1x+w2x^2+b #just right fit: Jtrain low, Jcv low 
+> understand degree of polynomial vs. Jtrain and Jcv: 
+as degree (d) increase, Jtrain decrease, when d is too high or low, Jcv increase, when in the middle, Jcv decrease 
+> summary: 
+underfit: high bias, Jtrain high, Jtrain close to Jcv 
+overfit: high variance, Jtrain maybe low, Jcv more higher
+High bias and high variance: Jtrain high, Jcv far more higher (less common in 1D regression) 
+
+high bias mean it is even not doing well in training set, high variance mean it does much worse in cross-validation set than training set 
+
+75.12.2 正则化和偏差或方差 (regularization and bias/variance)
+> degree of polymonial influence bias and variance
+> regularization (e.g., lambda) vs. algorithm performance:
+e..g., linear regression with regularization: fw,b(x)=w1x+w2x^2+w3x^3+w4x^4+b, J(w,b)=(1/2m)*sum(fw,b(x^[i])-y^[i])^2+(lambda/2m)*sum(wj^2): 
+(lambda/2m)*sum(wj^2)#regularization term, lambda: regularization parameter, if lambda is too high, then it will underfit (high bias), if lambda is too low, then it will overfit (high variance), if lambda is just right, then it will fit well (just right bias and variance)
+> choose regularization parameter lambda: 
+try lambda=0, minimize J(w,b)--> w^<1>, b^<1>--> Jcv(w^<1>, b^<1>)
+try lambda=0.01, minize J(w,b)--> w^<2>, b^<2>--> Jcv(w^<2>, b^<2>)
+try lambda=0.02, minize J(w,b)--> w^<3>, b^<3>--> Jcv(w^<3>, b^<3>)
+try lambda=0.04, minize J(w,b)--> w^<4>, b^<4>--> Jcv(w^<4>, b^<4>)
+try lambda=0.08, minize J(w,b)--> w^<5>, b^<5>--> Jcv(w^<5>, b^<5>)
+...
+try lambda=10, minize J(w,b)--> w^<n>, b^<n>--> Jcv(w^<n>, b^<n>)
+pick best w,b, report test error Jtest(w,b): 
+>> bias and variance as a function of regularization parameter lambda: 
+J(w,b)=(1/2m)*sum(fw,b(x^[i])-y^[i])^2+(lambda/2m)*sum(wj^2)
+when lambda is 0, overfit, Jtrain low, Jcv high, high variance 
+when lambda is too high, underfit, Jtrain high, Jcv high, high bias 
+when lambda is just right, fit well, Jtrain low, Jcv low, just right bias and variance
+Jtrain is a curve plot, as lambda increase, Jtrain increase
+Jcv is a curve plot, as lambda increase, Jcv decrease first, then increase, when lambda is just right, Jcv is the lowest
+
+76.12.3 建立表现基准 (establishing a baseline for comparison)
+> e.g., speech recogniton example: 
+human level performance: 10.6% error 
+training error Jtrain: 10.8%
+cross validation error Jcv: 14.8%
+> establish a baseline level for performance:
+human level performance 
+copeting algorithm performance
+guess based on experience 
+e.g., baseline performance: 10.6%, training error: 10.8%, cross validation error: 14.8% 
+base-train=0.2% (large? high bias?) 
+train-cross=4% (large? high variance?)
+
+77.12.4 学习曲线
+> e.g., fw,b(x)=w1x+w2x^2+b 
+let us make training set size as x axis, error as y axis, plot Jtrain and Jcv: 
+High bias case: 
+as training set size increase, Jtrain increase, Jcv decrease, but in general, Jtrain is lower than Jcv, but they will converge to a similar value when training set size is large enough, 
+so if learning algorithm suffer from high bias, get more training data will not help much
+if we have a human level performance, and we have a competing algorithm, and we have a baseline performance, then we can use learning curve to see if we have high bias or high variance problem, and then decide what to do next 
+High variance case: 
+as training set size increase, Jtrain increase, Jcv decrease, but in general, Jtrain is lower than Jcv, 
+if a learning algorithm suffers from high variance, get more training data is likely to help
+but increase training set size is normally expensive 
+
+78.12.5 再次决定下一步做什么
+> debugging a learning algorithm: J(w,b)=(1/2m)*sum(fw,b(x^[i])-y^[i])^2+(lambda/2m)*sum(wj^2)
+it make unacceptably large error in predictions, what to try next?
+get more training data, to fix high variance problem 
+try smaller set of features, fix high variance problem
+try get additional features, fix high bias problem
+try additional polynomia features,fix high bias problem 
+try decreasing lambda, fix high bias problem
+try increasing lambda, fix high variance problem 
+
+79.12.6 偏差或方差与神经网络
+> the bias variance tradeoff: 
+fw,b(x)=w1.x, fw,b(x)=w1.x+w2x^2+b, fw,b(x)=w1.x+w2x^2+w3x^3+w4x^4+b:
+simple model (high bias) --------tradeoff--------complex model (high variance) 
+> neural network and bias variance: 
+large neural network are low bias machines:
+does it do well on the training set? no, high bias, then use bigger network (expensive, require GPU etc), recheck training error until it does well, then 
+does it do well on the cross validation set? no, high variance, then more data (also a problem) and check training error and cross validation error until both 'yes' 
+> neural network and regularization:
+a large neural network will usually do as wel or better than a smaller one so long as regularization is chosen appropriately 
+but one thing is it is expensive, and can slow down process 
+> neural network regularization: J(W,B)=(1/m)*sum(L(f(x^[i]), y^[i]))+(lambda/2m)*sum(w^2) # all weighs W:
+in tensorflow: 
+Unregularized MNIST model:
+layer_1=Dense(units=25, activation='relu') 
+layer_2=Dense(units=15, activation='relu')
+layer_3=Dense(units=10, activation='linear')
+model=Sequential([layer_1, layer_2, layer_3])
+Regularized MNIST model:
+layer_1=Dense(units=25, activation='relu', kernel_regularizer=L2(lambda=0.01))
+layer_2=Dense(units=15, activation='relu', kernel_regularizer=L2(lambda=0.01))
+layer_3=Dense(units=10, activation='linear', kernel_regularizer=L2(lambda=0.01))
+model=Sequential([layer_1, layer_2, layer_3])
+
+80.13.1 机器学习的迭代发展 (iterative development of machine learning)
+> iterative loop of ML development: 
+choose architecture (mode, data, etc.), train model, diagnostics (bias, variance, error analysis), make decision on what the next (make neural network bigger, change lambda, get more data, more feature, etc), until satisfied with performance
+e.g., spam classification: building a spam classifier
+supervised learning: 
+x=features of email#x is vector
+y=spam or not spam (1 or 0)
+features: list the top 10000 words to compute x1, x2, ....x10000 
+how to try to reduce spam classifer error? 
+e.g., collect more data, develop sophsticated features based on email routing (from emial header), 
+define sophisticated features based on email body ('discount'etc), design algorithm to detect misspellings ('m0rtage')
+
+81.13.2 误差分析 (error analysis)
+> error analysis:
+e.g., mcv=500 example, algorithm misclassified 100 of them, muanually examine 100 examples and categorize them based on common traits 
+Pharma: 21, deliberate misspellings ('w4tch'): 3, unusual email routing: 7, steal passwords (phishing): 5, spam messages in embedded image: 5 
+
+82.13.3 添加数据
+> data augmentation: modify exsiting training example to create new training example  
+add more data it can be slow and expensive, instead, 
+1) focus on data of type where error analysis has indicated might help (more targeted data)
+2) data augmentation #especially for image data (e.g., distortion, rotate, flip, crop, change color, etc) 
+e.g., speech recognition: add noise to audio, change pitch, change speed, etc. 
+e.g., data synthesis (more for computer vision tasks): use artificial data to create new training example, e.g., Photo OCR 
+train OCR algorithm to recognize text in images, but not enough training data, so use synthetic data to create new training example, e.g., take a picture of a book page, then use computer to generate new image with different font, different size, different color, different background, etc.
+> engineering the data used by your system: 
+conventiaonal model-centric approach: AI=CODE + Data (FOCUS ON CODE:algorithm, model)
+data-centric approach: AI= Code + Data (FOCUS ON Data) 
+
+83.13.4 迁移学习：使用其他任务中的数据 (transfer learning)
+> transfer learning: use data from other tasks to help improve performance on your task 
+e.g., recognize handwritten digits from 0 to 9: 
+pretrained neural network with 1 million images of cats, dogs, cards, people... (1000 output units): 
+input x --> layer 1 --> layer 2 --> layer 3 --> layer 4 --> output layer 5 (cats, dogs, cards, people... (1000 output units))
+#then copy the above neural network and keep parameters like w1,b1, w2, b2, w3,b3, w4,b4, but change the output layer to 10 output units (0-9), here w5, b5 can not be copied, but come up with new w5, b5, 
+#here are two methods to train the new neural networks:
+1) only train output layers parameters, keep w1, b1...w4,b4 as fixed parameters (frozen), and use algorithms such as stochastic gradient descent or Adam to update w5, b5 to low cost function for learning to recognize digits 
+2) train all parameters w1, b1,...w5,b5, but the first four layers parameters would be initialized using the values that pretrained. 
+if you have small training set, option 1 better, if you have large training set, option 2 better 
+#by learning to recognize cats, dogs, etc and learned some sets of features for the earlier layers for processing image input and then tranfer these parameters to the new neural network which starts off with a better set of parameters than random initialization
+#these two steps of first training on a large dataset and then tuning the parameters further on smaller data is called supervised pretraining, and then fine tuning to new task 
+> why does transfer learning work? 
+#transfer learning works because the features learned for one task can be useful for another related task, especially when the tasks share similar underlying patterns or structures.
+# but ensure the same input type (e.g., image, audio, text) for the pretrained model and your application.
+> summary: 
+1) download neural network parameters pretrained on a large dataset with same input type (e.g., image, audio, text) as your application (or train your own)
+2) further train (fine tune) the network on your own data 
+
+84.13.5 机器学习项目的完整周期 
+> machine learning project lifecycle: 
+1）scope project (define project), 2) collect data (define and collect data), 3) train model (training, error analysis, iterative improvement), 4) deloy in production (deploy, monitor, maintain system) 
+> deployment: after train a model, a commom way to deploy the model is to implement your ML model in a inference server (inference server), whose job is to call your model to make prediction, and your team has implemented a i.e., mobile app that can make an API call to pass the audio clip that was recorded to your inference server and inference server apply the model to it and return prediction to it
+#大白话： 训练好模型以后，一个常见的部署方式是把模型放到一台专门负责预测的服务器（Inference Server）上。用户的应用程序（例如手机 App）通过 API 把数据（例如录音）发送到服务器，服务器调用模型进行预测，再把预测结果返回给 App
+Training Data → model.fit() → Trained Model → Deployment → Inference Server
+Mobile App/web/desktop → API Call → Inference Server → model.predict() → Prediction → Mobile App/web/ desktop app
+> to implement this, software enginnering may needed: 
+1) ensure reliable and efficient prediction, 2) scaling, 3) logging, 4) system monitoring, 5) model updates
+MLOps: machine learning operations, a set of practices that aims to deploy and maintain machine learning models in production reliably and efficiently.
+
+85.13.6 公平、偏见与伦理
+> bias: 
+e.g., hiring tool discriminate against women, facial recognition system matching dark skinned individuals to criminal mugshots 
+e.g., biased bank loan approvals , toxi effect of reinforcing negative stereotypes 
+> adverse use cases: spreading misinformation, deepfakes, surveillance, autonomous weapons, commit fraud, spam, phishing, fake contents
+> ethics 
+> guidelines: 
+1) brainstorm potential wrong, harm to vulnerabale groups, 2) search literatures on standards/guidelines for your industry 
+3) audit system against possible harm prior to deployment, 4) develop mitigation plan and after deployment, monitor possible harm 
+
+86.14.1 倾斜数据集的误差指标 (skewed dataset error metrics)
+> if working on a ML application where ratio of positive and negative is very skewed, then accuracy is not a good metric to evaluate performance of your model, because it can be misleading
+e.g., rare disease classification: 
+tran classifer fw,b(x) (y=1 if diseae present, y=0 if disease absent)
+supposed that youfind that you have got 1% error on test set (99% correct diagnoses) , 
+but if only 0.5% of patients have the disease, then a classifier that always predicts y=0 (no disease) will have 99.5% accuracy, but it is not useful because it never detects the disease 
+when dealing with skewed dataset, different error metric is recomended: precision/ recall 
+>>precision: the number of true positive divided by the number classifeid as positive (number of predicted positive: true positive + false positive) #(e.g., of all patients where we predicted y=1, what fraction actually have the rare disease?)
+>>recall: the number of true positive divided by the number of actual positives (number of actual positive: true positive + false negative) #(e.g., of all patients who actually have the rare disease, what fraction did we correctly identify?)
+precision, 预测出来的结果，有多少是真的 (少误判，查准率)。recall, 真正应该找到的，有多少没有漏掉 （少漏判，查全率）。
+>>y=1 in presence of rare diseaes we want to detect 
+actual class: 1 or 0, predicted class 1 or 0
+when actual class is 1, predicted class is 1: true positive (TP)
+when actual class is 1, predicted class is 0: false negative (FN)
+when actual class is 0, predicted class is 1: false positive (FP)
+when actual class is 0, predicted class is 0: true negative (TN)
+
+87.14.2 精确率与召回率的权衡 （tradeoff between precision and recall）
+> tradeoff between precision and recall: 
+logistic regression: 0<fw,b(x)<1 
+predict 1 if fw,b(x) >=0.5, predict 0 if fw,b(x)<0.5 
+1) suppose we want to predict y=1 (rare disease) only if very confident, we want to set higher threshold (e.g., 0.7)
+what does this mean, raising threholds will increase precision, but the recall will decrease
+# higher precision, lower recall,
+2) suppose we wnat to avoid missing too many cases of rare disease (when in doubt predict y=1), we set lower thredhold (e.g., 0.3) 
+what does this mean, lowering threshold will increase recall, ut thre precision will decrease 
+#lower threshold: lower precision, higher recall 
+#note, the threshold should be same
+> F1 score: automatic way to combine precison and recall 
+F1 score=1/2*(1/precision+1/recall)=2*precision*recall/(precision+recall)
+e.g., 
+algorithm 1: precision=0.5, recall=0.4, F1=0.44
+algorithm 2: precision=0.7, recall=0.1, F1=0.18
+algorithm 3: precision=0.02, recall=1, F1=0.04
+
+------------------------------------------ week 7
+------------------------------------------ week 8
+88.15.1 决策树模型
+> decision tree as classification algorithm: 
+e.g. cat classification example:
+ear shape face shape whiskers cat 
+pointy round present 1 
+floppy not round present 1
+floppy round abset + 
+pointy not round present 0
+pointy round present 1
+pointy round absent 1  
+> decision tree: a tree-like model of decision and their possible consequence, including:
+root node, internal node (together, called decision nodes), leaf node
+> different decision tree models may perform different on the same dataset
+89.15.2 学习过程 (learning process)
+> decision tree learning: 
+e.g.,
+root node: e.g., ear shape, spilt data into two branches, one for pointy, one for floppy, then set two branches as face shape and whiskers, then spit face shape into round and not round, spilt whiskers into present and absent, to categorize cat or not cat 
+> decision tree learning: 
+1) decision 1: how to choose what features to spilt on each node? maximize purity /impurity
+2) decision 2: when do you stop spiltting? https://sns-webpic-qc.xhscdn.com/202607102351/1a85bd34b1e45ec47e09c26e38d7a0db/notes_pre_post/1040g3k0322e16nd5nu0g5pbemjoo6qg2p19g9pg!nd_dft_wlteh_webp_3
+#when a node is 100% one class, when splitting a node will result in the tree exceeding a maximum depth, when improvements in purity  score are below a threshold, shen number of examples in a node is below a threshold 
+
+90.16.1 测量纯度 (measuring purity)
+> Entropy: a measure of impurity # e.g., p1=fraction of examples that are cats
+H(p1)=-p1log2(p1)-p0log2(p0) = -p1log2(p1)-(1-p1)log2(1-p1) #entropy is 0 when p1=0 or p1=1, entropy is 1 when p1=0.5 
+
+91.16.2 选择拆分信息增益(choose a split information gain)
+> choose a split: 
+1) compute the purity at each sub node under each root node, p1^left，p1^right and the relevant entropy H(p1^left), H(p1^right)
+2) compute the weighted average of purity at each sub node under each root node, (H(p1^root)-[number of example in left node/number of example in root node)*H(p1^left)+(number of example in right node/number of example in root node)*H(p1^right)]
+> information gain:
+information gain=H(p1^root)-(w^left*H(p1^left)+w^right*H(p1^right))
+#IG=H(root)-Weighted Child entropy 
+# information gain is a measure of the reduction in entropy achieved by splitting the data on a particular feature 
+# information gain larger, the better, because it means that the split results in a more pure distribution of classes in the child nodes
+# IG测量的是相比切之前，纯了多少，不是切完以后纯不纯，因为decision tree的目标是让每个叶子节点尽可能纯，所以我们希望切完以后纯度高，信息增益大
+92.16.3 整合
+> decision tree learning:
+1) start with all examoples at the root node
+2) compute information gain for all possible feature and pick the one with highest information gain 
+3) split dataset according to selected feature, and create left and right branhes of the tree
+4) keep repeating splitting process until stopping critieria is met: 
+>>> when a node is 100% one class (entropy is 0)
+>>> when splitting a node will result in the tree exceeding a maximum depeth #限制树的深度
+>>> information gain from additional splits is less than threshold 
+>>> when numer of examples in a node is below a threshod 
+#training set -->训练模型--> validation set -->选择超参数 （maximum depeth） --> test set --> 最终模型
+> recursive splitting (递归切分)：
+> how to choose the maximum depth of the tree?
+1) the larger maximum depth, the bigger decison tree, like fitting a higher degree polynomial, or train a larger neural network, let decision tree learn more complex model, but also increase risk of overfitting 
+2) can use cross-validation to pick the maximum depth 
+
+93.16.4 使用分类特征的一种独热编码(use One-Hot encoding of categorical feature)
+> 一种将一个具有 K 个类别（category）的分类特征，转换为 K 个二元（0/1）特征的方法
+> applied to more than 2 discrete categorical features, neural networks, linear regression, logistic Training
+
+94.16.5 连续的有价值特征 (continuous valued features)
+>e.g., cat or dog classification example: 
+ear shape (pointy, floopy), face shape(round, not round), whiskers (repsent, absent), weight, cat (1 or 0)
+>>> splitting on a continuous variable: # weight
+#try different threshold to compute information gain
+
+95.16.6 回归树 (decision tree learning as regression tree algorithm): predicting a number 
+> e.g., predicting weight
+root node: ear shape --(pointy, floopy) --> branches node: face shappe (round, not round) --> leaf node 
+> choose a split: 
+ear shape --> (pointy, floopy) --> branches node: 
+#compute variance at the root node, weights of each and corresponding variance, and weight of left node and right node 
+face shape --> (round, not round) --> leaf node 
+#compute weights and corresponding variance
+whiskers --> (present, absent) --> leaf node 
+#compute weights and corresponding variance
+variance reduction=variance at root node - (w_left node * variance of left node + w_right node * variance of right node) #larger variance reduction, the better 
+variance of left node=1/nleft*sum(weight of left node - mean of left node)^2 #weight:体重，不是权重
+variance of right node=1/nright*sum(weight of right node - mean of right node)^2
+variance at root node=1/(nleft+nright)*sum(weight of root node - mean of root node)^2
+w_left=nleft/(nleft+nright), w_right=nright/(nleft+nright)
+
+96.17.1 使用多个决策树 (using multiple decision trees)
+> trees are highly sensitive to small changes of data in single tree, more decision trees, more robust 
+> tree ensemble: a collection of multiple trees
+
+97.17.2 放回抽样 (sampling with replacement)# to build a tree ensemble
+> sampling with replacement: each selected observation is returned to the population before the next draw, so that every draw is independent and each observation has the same probability of being selected on every draw.
+ 
+98.17.3 随机森林算法 (random forest algorithm)： an powerful tree ensemble algorithm
+> generate a tree sample: 
+e.g., given training set of size m 
+for b=1 to B： 
+using smapling with replacement to create a new training set of size m
+train a decision tree on the new dataset 
+repeat the above steps B times to create a forest of B trees 
+> randomize the feature choice:
+# at each node, when choose a feature to use to split, if n features are available, pick a random subset of k<n feature and allow the algorithm to only chooose from that subset of features. 
+# when n is big, k=sqrt(n) is a good choice 
+
+99.17.4 XGBoost #a type of boosted decision tree algorithm 
+>XGBootst: most commonly used way of decision tree ensembles  #run quickly 
+> boosted tree intuition: 
+e.g., 
+give training set of size m 
+for b=1 to B: 
+use sampling with replacement to create a new training set of size m 
+but instead of picking from all examples with equal (1/m) probability, make it more likely to pick examples that the previously trained trees misclassify 
+train a decision tree on the new dataset 
+> XGBoost: eXtreme Gradient Boosting： 训练第一棵树，然后根据第一棵树没有好的部分学习训练第二棵树，继续迭代，直至模型朝着损失函数减小的方向更新。
+= 开源Gradient Boosting + 二阶梯度优化 + 内置正则化（防止过拟合） + 高效工程实现。
+核心：每一棵新树都学习前面所有树犯下的错误（残差），最后把所有树加起来。自动决定哪里分裂，何时停止长树
+> Using XGBoost
+# For classification:
+from xgboost import XGBClassifier 
+model=XGBClassifier()
+model.fit(X_train, y_train) 
+y_pred=model.predict(X_test)
+# For regression: 
+from xgboost import XGBRegressor
+model=XGBRegressor()
+model.fit(X_train, y_train)
+y_pred=model.predict(X_test)
+
+100.17.5 什么时候使用决策树
+> decision tree vs neural networks: 
+#decision tree and tree ensemble: 
+work well on tabular (Structured data)
+not recommended for unstructured data (image, audio, text)
+fast (#choose architecture, train model, diagnostics, iterate the processes)
+small decision trees maybe human interpretable  
+#neural networks:
+work well on all types of data
+maybe slower than a decision tree 
+work with transfer learning 
+when building a system with multiple models working together, it maybe easier to string together multiple neural networks 
+
+----------------------------------------------------------------week 9
+101.1.1 欢迎来到第三部分 无监督学习、推荐系统和强化学习
+> unsupervised learning
+>>>>clustering, anomaly detection
+> recommender systems 
+> reinforcement learning
+
+102.2.1 什么是聚类 (clustering)
+> clustering #: a type of unsupervised learning, where the goal is to group similar examples together, and discover underlying patterns in the data
+> application of clustering:
+!) group similar news 
+2) market segmentation
+3) DNA analysis 
+4) astronomical data analysis 
+
+103.2.2 K-means的直观理解
+> k-means clustering: a simple and popular unsupervised learning algorithm for clustering 
+# it will repeatly do two things:
+1) assign points to cluster centroids 
+2) move cluster centroids  #recompute the centroids based on the points assigned to them 
+
+104.2.3 K-means算法
+> k-means algorithm: 
+1) randomly initialize k cluster centroids u1, u2, ..., uk 
+2) repeat {
+#asign points to cluster centroids:
+for i=1 to m
+c^(i):=index(from 1 to k) of cluster centroid closest to x^(i) 
+# to min(k)||x^(i)-uk||^2, #欧氏距离平方（squared Euclidean distance, 寻找距离最近的 centroid
+# move cluster centroids:
+fir k=1 to k
+uk:=average of points assigned to cluster k
+}
+# x1, x2, x5, x6 assigned to cluster 1, the u1=1/4*(x1+x2+x5+x6) is the new cluster centroid for cluster 1 #x is a vector 
+> k-means for clusters that are not well separated: 
+#e.g., t-shirt sizing: SML, with x as height, y as weight  
+
+105.2.4 优化目标 (Optimization Objective)
+> k-mean optimization objective: 
+c^(i)=index of cluster (1,2...k) to which example x^(i) is currently assigned 
+uk=cluster centroid k 
+uc^(i)= cluster centroid of cluster to which example x^(i) has been assigned 
+#（distortion) cost function: #miniize the J
+J(c^(1), c^(2), ..., c^(m), u1, u2, ..., uk)=(1/m)*sum(||x^(i)-uc^(i)||^2)
+> cost funciton for k-means: 
+J(c^(1), c^(2), ..., c^(m), u1, u2, ..., uk)=(1/m)*sum(||x^(i)-uc^(i)||^2)
+repeat{
+    #assigned points to cluster centroids: 
+    for i=1 to m 
+        c^(i):=index(from 1 to k) of cluster centroid closest to x^(i)
+    #move cluster centroids: 
+    for k=1 to K 
+    uk:=average of points assigned to cluster k    
+}
+# if J goes up, then something is wrong, because the algorithm should always decrease J or keep it the same, never increase J
+# if J stop decreasing, then the algorithm has converged, and we can stop the algorithm 
+
+106.2.5 初始化K-means (initialize k-means)
+> k-means algorithm: 
+step 0: randomly initialize K-cluster centroids u1, u2, ..uk 
+repeat{step 1: assign points to cluster centroids, step 2: move cluster centroids}
+> random initialization:
+1) choose k<m, randomly# k: number of clusters, m: number of examples 
+codes: 
+for i=1 to 100 {
+    randomly initialize k-means #k random examples 
+    run k-means. get c^(1), ..c^(m), u1, ...uk 
+    computer cost function (distortion) 
+    J(c^(1),....c^(m), u1, u2, ...uk) 
+}
+
+107.2.6 选择聚类的个数
+> what is right value of k? 
+> choose the value of k 
+1) elbow method: plot the cost function J as a function of k, and look for the 'elbow' point where the cost function starts to decrease more slowly
+2) evaluate k-means based on 业务背景, e.g., T-shirt sizing, SML, SMLXL 
+
+108.3.1 发现异常事件 (detecting anomalies)
+> e.g., aircraft engine features: x=heat generated, x2=vibration intensity ....
+dataset:{x^(1), x^(2), ..., x^(m)}
+new engine: xtest 
+> density estimation: 
+dataset:{x^(1), x^(2), ..., x^(m)}
+is xtest anomalous? 
+p(xtest)< epsilon, flag anomaly 
+p(xtest)>= epsilon, flag normal 
+> anomaly detection example:
+fraud detection: 
+x^(i) = features of user i(s) activities 
+model p(x) from data
+identify unusuall users by checking which have p(x) < epsilon 
+monitoring computers in a data center:
+x^(i)=features of machine i 
+x1=memory use, x2=number of disk accesses, x3=CPU load, x4=network traffic, ... 
+
+109.3.2 高斯（正态）分布 (Gaussian/Normal Distribution)
+> gaussian distribution: x is a number, if x is a distributed gaussian with mean u, variance sigma^2: 
+p(x)=(1/sqrt(2*pi*sigma^2))*exp(-(x-u)^2/(2*sigma^2)) 
+> gaussian distribution example: 
+u=0, sigma=1 (more spread out) vs. u=0, sigma=0.5 (more concentrated) vs. u=3, sigma=0.5 (more concentrated, shifted to the right)
+> parameter estimation: 
+dataset:{x^(1), x^(2), ..., x^(m)}
+u=1/m*(sum(x^(i))), sigma^2=1/m*(sum((x^(i)-u)^2))
+#maximum likelihood estimation (MLE) 
+
+110.3.3 异常检测算法
+> density estimation: 
+training set:{x^(1), x^(2), ..., x^(m)}
+each example xi has n features 
+p(x)= p(x1; u1, sigma1^2)*p(x2; u2, sigma2^2)*...*p(xn; un, sigman^2)
+x=[x1, x2, ..., xn] 
+> anomaly detection algorithm: 
+1) choose n features (e.g., CUP使用率， 内存使用率，网络流量) xi that you think might be indicative of anomalous examples 
+2) fit parameters u1, ...un, sigma1^2,....sigman^2
+uj=1/m*(sum(xj^(i))), sigmaj^2=1/m*(sum((xj^(i)-uj)^2))  #u and x can be vector 
+3) given new example x, compute p(x): 
+p(x)=p(x1; u1, sigma1^2)*p(x2; u2, sigma2^2)*...*p(xn; un, sigman^2) 
+(j=1)∏(n)​p(xj​;μj​,σj2​)=(j=1)∏(n)1/sqrt(2*pi*sigmaj^2)*exp(-(xj-uj)^2/(2*sigmaj^2)) 
+#相乘是因为假设x1，x2,...,xn是相互独立的 (严格说，不一定成立，但在实际应用中，假设独立性可以简化计算)
+anomaly if p(x)<epsilon, normal if p(x)>=epsilon 
+> anomaly detection example:
+u1=5, sigma=2 vs. u2=3, sigma2=1 
+epsilon=0,02, p(xtest^(1))=0,0426,'ok', p(xtest^(2))=0,0013,'anomaly'
+#epsilon的选择：可以通过cross-validation set来选择epsilon，选择使得F1 score最高的epsilon
+F1= 2*precision*recall/(precision+recall)
+
+111.3.4 开发和评估异常检测系统
+> the importance of real-number evaluation
+assume we have some labeled data of anomalous and normal example (y=0 for nomal, y=1 for anomalous)
+training set: {x^(1), x^(2), ..., x^(m)} 
+cross-validation set: {(x^(1),y^(1)), (x^(2),y^(2)), ..., (x^(m_cv),y^(m_cv))}
+test set: {(x^(1),y^(1)), (x^(2),y^(2)), ..., (x^(m_test),y^(m_test))} 
+# cross validation set and test set include a few anomalous example, 
+> algorithm evaluation: 
+fit model p(x) on traing set x^(1), x^(2), ..., x^(m)
+on a cross validation/test example x, predict y=1 if p(x)<epsilon, predict y=0 if p(x)>=epsilon 
+possible evaluation metrics: true positive, false positive, true negative, false negative, precision, recall, F1 score
+cal also use cross-validation set to choose epsilon, and then evaluate the model on test set to see how well it performs on unseen data
+
+112.3.5 异常检测 vs. 监督学习 (anomaly detection vs supervised learning)
+> anomaly detection vs. supervised learning:
+anomaly detection: very small number of positiive example (y=1) (0-20 is common) 
+large number of negaitve (y=0) example 
+#异常样本很少，现在异常和未来异常不一样
+supervised learning:  large number of positive (y=1) and negative (y=0) example 
+main difference: 
+anomaly detection: many different 'types' of annomalies. hard for any algorithm to learn from positive examples what the anomalies look like. future anomalies may look nothing like any of the anomalous examples we have seen so far. 
+(e.g., fraud detection, manufacturing, finding new previous unseen defects, e.g., aircraft engines, monitoring machines in a data center...)
+supervised learning: enough positive examples for algortihm to get a sense of what positive example are like, future posituve examples likely to be similar to ones in the training se.  
+(e.g., email spam, manufacturing defect, finding known previously seen defects, weather prediction, disease classification..)
+
+113.3.6 选择要使用的特征
+> non-gaussian features: 
+原始features，画histogram，是不是高斯分布
+如果某个特征不服从高斯分布，先对它进行变换，让它更接近高斯分布，在进行密度估计 
+#异常检测假设每个特征都服从高斯分布 
+#变换：x-->log(x), x-->log(x+1), x-->sqrt(x), x-->x^3, x-->1/x, x-->x^2, x-->exp(x), x-->x^1/3...
+> error analysis for anomaly detection:
+一维 vs. 二维 计算p(x)：如果正常样本和异常样本得到的概率 p(x) 都差不多（都很大或都很小），说明当前特征不能有效区分它们。此时最有效的改进方法通常不是调整阈值 ε，而是设计或增加更有区分能力的特征，让异常样本在特征空间中远离正常样本，从而得到更小的 p(x)。
+e.g., monitoring computers in a data center, 
+choose features that might take on unusually large or small values in the event of an anomaly
+x1=memory use, x2=number of disk accesses, x3=CPU load, x4=network traffic, x5=CPU load/network traffic, x6=(CPU load)^2/(network traffic)
+decide features based on p(x) < epsilon, flag anomaly, p(x) >= epsilon, flag normal in the cross validation set 
+
+114.4.1 提出建议
+> e.g., predicting movie ratings:
+users movies using one to five stars 
+nu=number of users, nm=number of movies, r(i,j)=1 if user j has rate movie i, y^(i,j)= rating given by user j to movie i (defined only if r(i,j)=1) 
+r(1,1)=1 #user 1 has rated movie 1
+r(3,1)=0 #user 1 has not rated movie 3 
+y^(3,2)=4 #user 2 has rated movie 2 with 4 stars 
+
+115.4.2 使用每项特征 (using per-item features)
+> what if we have features of the movies?  #collaborative filtering 
+movie  alice  bob carol dave x1(romance) x2(action) 
+a       5     5     4     5      0.9       0
+b       5     5     4     5      1         0.01
+c       ?     ?     ?     ?      0.99      0
+d       0     0     0     0      0.1         1
+e       0     0     0     0      0         0.9
+x^(1)=[0.9, 0.1], x^(3)=[0.99, 0]  
+nu=4, nm=5, n=2 #n: number of features 
+for user 1: predicting rating for movie i as: w.x^(i) +b 
+w^(1)=[5,0], b^(1)=0, x^(3)=[0.99, 0] 
+w^(1).x^(3)+b^(1)=5*0.99+0=4.95, predict user 1 will rate movie 3 with 4.95 stars
+for user j: predict user j(s) rating for movie i as: w^(j).x^(i)+b^(j)
+> coost function: 
+r(i,j)=1 if user j has rated movie 1 (o, otherwise)
+y^(i,j)= rating given by user j on movie i (if defined) 
+w^(j), b^(j) =parameter for user j
+x^(i)=feature vector for movie i 
+for user j and movie i, predict rating: w^(j).x^(i)+b^(j) 
+m^(j)= number of moview rated by user j 
+to learn w^(j), b^(j): 
+J(w^(j), b^(j))=1/(2m^(j)*(sum(w^(j).x^(i)+b^(j)-y^(i,j))^2 + lambda/2m^(j)*(sum(wk^(j))^2 #i:r(i,j)=1 #only sum the movies that user j has rated, k=1 to n, n=number of features 
+> ocst function
+to learn parameter w^(j), b^(j) for user j:
+J(w^(j),b^(j))=1/2*(sum(w^(j).x^(i)+b^(j).y^(i,j))^2 + lambda/2*(sum(wk^(j))^2 #k=1 to n 
+#J(w(j),b(j))=1/2(i:r(i,j)∑)​(w(j)⋅x(i)+b(j)−y(i,j))2+2λ(​k=1∑n)​(wk(j)​)2
+to learn parameters w^(1),b^(1), w^(2), b^(2),...w^(nu), b^(nu) for all users:
+J（w^(1),....w^(nu), b^(1),....b^(nu)）=1/2*(​j=1 to nu∑)(​​i:r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​j=1 to nu∑)(​​k=1 to n∑)​(wk^(j)​)2
+#J=J(1)+J(2)+J(3)+⋯+J(nu​)
+
+116.4.3 协同过滤算法 #in the case that we do not have features of the movies 
+> problem motivation 
+e.g., 
+movie  alice  bob carol dave x1(romance) x2(action) 
+a       5     5     4     5     ?       ?
+b       5     5     4     5     ?       ?
+c       ?     ?     ?     ?     ?       ?
+d       0     0     0     0     ?       ?
+e       0     0     0     0     ?       ?
+w^(1)=[5,0], b^(1)=0 
+w^(2)=[5,0], b^(2)=0
+w^(3)=[0,5], b^(3)=0
+w^(4)=[0,5], b^(4)=0
+using w^(j).x^(i)+b^(j) #predict user j(s) rating for movie i 
+how to guess the features of the movies? 
+w^(1).x^(1) is close to 5, 
+w^(2).x^(1) is close to 5,
+w^(3).x^(1) is close to 4,
+w^(4).x^(1) is close to 5,
+[5,0]*[x1(romance), x2(action)]+b^(1)=5, 
+[5,0]*[x1(romance), x2(action)]+b^(2)=5, 
+[0,5]*[x1(romance), x2(action)]+b^(3)=4, 
+[0,5]*[x1(romance), x2(action)]+b^(4)=5,
+J(x1​,x2​)=(5x1​−5)2+(5x1​−5)2+(5x2​)2+(5x2​)2 #to minize, x1=1, x2=0
+> cost function for collaborative filtering:
+given w^(1),....w^(nu), b^(1),....b^(nu) for all users, 
+to learn x^(i): 
+J(w^(i))=1/2*(​j:r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​​k=1 to n∑)​(xk^(i)​)^2 #minimize the squared error of the predicted ratings for movie i, plus a regularization term 
+to learn x^(1),....x^(nm): 
+J(x^(1),...x^(nm))=1/2*(​i=1 to nm∑)(​​j:r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​​i=1 to nm∑)(​​k=1 to n∑)​(xk^(i)​)^2
+> collaborative filtering: 
+cost function to learn w^(1),b^(1), ....w^(nu),b^(nu): 
+minimize J(w^(1),b^(1),....w^(nu),b^(nu))=1/2*(​j=1 to nu∑)(​​i:r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​​j=1 to nu∑)(​​k=1 to n∑)​(wk^(j)​)^2
+cost function to learn x^(1),....x^(nm):
+minimize 1/2*(i=1 to nm∑)(​​j:r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​​i=1 to nm∑)(​​k=1 to n∑)​(xk^(i)​)^2
+put them together: 
+J（w,b,x)=1/2*((i,j):r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​​j=1 to nu∑)(​​k=1 to n∑)​(wk^(j)​)^2 +λ/2(​​i=1 to nm∑)(​​k=1 to n∑)​(xk^(i)​)^2
+#总结：如果固定x，优化w，如果固定w，优化x，交替迭代，直到收敛
+#定义参数 → 定义预测模型 （y-hat=w.x+b）→ 定义损失函数 ((y-hat-y)^2) → 定义总代价 (J=sum(loss)=(y-hat-y)^2+regularization)→ 优化参数 (协同过滤，更新w，b, x，直至cost最小)
+> gradient descent for collaborative filtering: 
+linear regression:
+repeat{wi=wi-alpha*∂/∂wi*(J(w,b)) 
+b=b-alpha*∂/∂b*(J(w,b)) 
+} #以前学的
+now here for collaborative filtering:
+repeat{wi^(j)=wi^(j)-alpha*∂/∂wi^(j)*(J(w,b,x))
+b^(j)=b^(j)-alpha*∂/∂b^(j)*(J(w,b,x))
+xk^(i)=xk^(i)-alpha*∂/∂xk^(i)*(J(w,b,x))
+}
+#协同过滤和线性回归没有本质区别，只是多了一个要学习的参数 x (注意，不是数据，这里是学习出来的参数)
+# 在线性回归中，特征（x）是输入数据；而在协同过滤中，电影特征（x）本身也是要学习的参数。
+
+117.4.4 Binary labels- favs, likes and c
+> binary labels: 
+e.g., 
+movie alice  bob carol dave 
+a       1     1     0     0
+b       1     ?     ?     0
+c       ?     1     0     ?
+d       0     0     1     1
+e      0     0     0      ? 
+# how to apply collaborative filtering with binary labels data?
+> example application: 
+1) did user j purchase an item after being shown? #1, 0, ?
+2) did user j fav/like an iten?#1, 0, ?
+3) did user j sped at least 30s with an iten?#1, 0, ?
+4) did user j click on an item?#1, 0, ?
+> from regression to binary classification: 
+previously: 
+predict y^(i,j) as w^(j).x^(i)+b^(j) 
+for binary labels:
+predict that the probability of y^(i,j)=1 is given by g(w^(j).x^(i)+b^(j)) where g(z)=1/(1+exp(-z)) is the sigmoid function
+> cost funciton for binary application:
+previous cost function:
+1/2*((i,j):r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​​j=1 to nu∑)(​​k=1 to n∑)​(wk^(j)​)^2 +λ/2(​​i=1 to nu∑)(​​k=1 to n∑)​(wk^(j)​)^2
+loss for binary labels: y^(i,j): f(w,b,x)=g(w^(j).x^(i)+b^(j)
+loss function, L(f(w,b,x), y^(i,j))=-y^(i,j)log(f(w,b,x)(x))-(1-y^(i,j))log(1-f(w,b,x)(x)) 
+J(w,b,x)=(i,j):r(i,j)=1∑L(f(w,b,x), y^(i,j))=(i,j):r(i,j)=1∑L(g(w^(j).x^(i)+b^(j)) 
+
+118.5.1 均值归一化 (mean normalization)
+> users who have not rated any movies: 
+movie  alice  bob carol dave  eve 
+a       5     5     4     5     ?       
+b       5     5     4     5     ?       
+c       ?     ?     ?     ?     ?       
+d       0     0     0     0     ?       
+e       0     0     0     0     ?       
+to minimize cost function: J（w,b,x)=1/2*((i,j):r(i,j)=1∑)​(w^(j).x^(i)+b^(j)-y^(i,j))^2 +λ/2(​​j=1 to nu∑)(​​k=1 to n∑)​(wk^(j)​)^2 +λ/2(​​i=1 to nm∑)(​​k=1 to n∑)​(xk^(i)​)^2
+add mean normalization will help algorthoms come with better prediction for user who has not rated any movies 
+> mean normalization: 
+[ [5, 5, 0, 0, ?],
+[5, ?, ?, 0, ?],
+[?, 4, 0, ?, ?],
+[0, 0, 5, 4, ?],
+[0, 0, 5, 0, ?]] 
+to carry out mean normalization, compute the mean rate for each movie: 
+u=[[2.5], [2.5], [2], [2.25], [1.25]], 
+then substract the mean from each movie rating for each user: 
+[ [2.5, 2.5, -2.5, -2.5, ?],
+[2.5, ?, ?, -2.5, ?],
+[?, 1.5, -2, ?, ?],
+[-2.25, -2.25, 2.75, 1.75, ?],
+[-1.25, -1.25, 3.75, -1.25, ?]]
+#new y^(i,j), to learn w^(j), b^(j), x^(i) 
+for user j, on movie i predict: 
+w^(j).x^(i)+b^(j) +ui 
+user 5 (eve):
+w^(5)=[[0],[0]],b^(5)=0, w^(5).x^(1)+b^(5)+u1=0+0+2.5=2.5 
+another method: normalize the columns of the rating matrix instead of rows, but this is not as good as normalizing the rows, because we want to predict the rating of a user for a movie, and we want to know how much the user likes the movie compared to other movies, not compared to other users.
+
+119.5.2 协同过滤的TensorFlow实现
+> tensorflow help to compute derivatives of cost function automatically 
+> derivatives in ML: 
+gradient descent algorithm: 
+repeat{w=w-alpha*∂/∂w(J(w,b,x))
+b=b-alpha*∂/∂b(J(w,b,x))} 
+> custom training loop: 
+w=tf.Variable(3.0) # initial value of w
+x=1.0 # input value of x
+y=1.0 # target value of y 
+alpha=0.01 # learning rate
+iteration=30 
+for iter i range(iteration) 
+with tf.GradientTape() as tape:
+fwb=w*x #f(x) 
+costJ=(fwb-y)**2 #cost function J(w)= (f(x)-y)^2
+[djdw]=tape.gradient(costJ, [w]) #compute the derivative of cost function J with respect to w
+w.assign_add(-alpha.dJdw) #update w by subtracting alpha*dJdw from w
+#this feature is called AutoDiff /Auto Gradient, which is a key feature of TensorFlow and PyTorch. It allows you to compute the derivatives of cost functions automatically, which is very useful for training machine learning models.
+#to use tensoflow to implement collabroative filtering algorithm: 
+>implementation in tensorflow: 
+optimizer=keras.optimizers.Adam(learning_rate=1e-1) #optimizer
+iteration=200
+for iter in range(iteration):
+with tf.GradientTape() as tape: 
+cost_value=cofiCostFuncV(X,W, b,Ynorm, R, num_users, num_movies, lambda) #compute the cost function value
+grads=tape.gradient(cost_value, [X,W，b]) #compute the gradients of cost function with respect to X, W, b
+optimizer.apply_gradients(zip(grads, [X,W, b])) #zip: combine the gradients and the variables to update
+
+gradient descent algorithm:
+repeat{w=w-alpha*∂/∂w(J(w,b,x))
+b=b-alpha*∂/∂b(J(w,b,x))
+x=x-alpha*∂/∂x(J(w,b,x))} #until convergence 
+
+120.5.3 查找相关项目
+> finding related items:
+the features x^(i) of item i are quite hard to interpret #x1, x2, x3 are romance or action...
+to find other items related to it, find item k with x^(k) similar to x^(i) 
+(l=1 to n)sum(xl^(k)-xl^(i))^2 #with smallest distance 
+> limitations of collaborative filtering: 
+1) cold start problem: how to 
+e.g., rank new items that few users have rated? show somthing reasonable to new users who have not rated few items?
+2) user side information about items or users: 
+e.g., item(genre, movie stars, studio), user(age, gender, location), expressed preference ,.
+
+121.6.1 协同过滤 vs. 基于内容的过滤 (content-based filtering)
+> collaborative filtering vs. content-based filtering:
+collaborative filtering: 
+recommend items to you based on rating of users who gave similar ratings as you 
+content-based filtering:
+recommend items to you based on features of user and item to find good match 
+r(i,j)=1 if user j has rated item i 
+y(i,j) rating given by user j on item i (if defined) 
+>exmaples of user and item features:
+user features: age, gender, country, movied watched, average rating per genre # xu^(j) for user j
+movie features: year, genre, reviews, average rating,...# xmÅ(i) for movie i 
+> content-based filtering: learning to match:
+predict rating of user j on movie i as:
+w^(j).x^(i)+b^(j) #w and x are vectors, computed from xu^(j) and xm^(i) as Vu and Vm, respectively 
+users preference: Vu^(j)=[[4.9], [0.1], [0.1], [0.1]] #user j like, like, ....
+movie features: Vm^(i)=[[0.9], [0.1], [0.1], [0.1]] #movie i is romance, action, ....
+user preference.movie features
+
+122.6.2 Deep learning for content-based
+> recall: neural network architecture: 
+#Xu-->Vu 
+Xu--> hidden layer 1-->hidden layer 2-->hidden layer 3-->Vu 
+#Xm-->Vm
+Xm--> hidden layer 1-->hidden layer 2-->hidden layer 3-->Vm
+prediction: Vu.Vm #note: the output layers of user network and movie network should have the same dimension
+use g(vu^(j).vm^(i)) function to predict the probability that y^(i,j) is 1 
+> neural network architecture for content-based filtering:
+user features: xu^(j)-->hidden layer 1-->hidden layer 2-->hidden layer 3-->Vu^(j) 
+movie features: xm^(i)-->hidden layer 1-->hidden layer 2-->hidden layer 3-->Vm^(i) 
+prediction: Vu.Vm 
+how to train all the parameters of both user network and movie network?
+construct cost function J =((i,j):r(i,j)=1)∑(Vu^(j).Vm^(i) - y^(j,j))^2 + NN regularization term 
+use gradient descent or some other optimization algorithm to minimize J with respect to all the parameters of both user network and movie network
+also use regularization term to encourage the neural netowrk to neural network to keep the values of parameters small 
+> learned user and item vectors: 
+vu^(j) is a vector of length 32 that describe user j with features xu^(j)
+vm^(i) is a vector of length 32 that describe movie i with features xm^(i)
+to find movies similar to movie i: compute the distance ||vm^(k) - vm^(i)||^2 small 
+# this can be pre-computed ahead of time 
+
+123.6.3 从大目录中推荐 (recommend from a large catalogue)
+> how to efficiently fidn recommendation from a large set of items?
+e.g., movies (100+), ads(1m+), songs(10m+), products(10m+) 
+xu-->hiddnen layer 1-->hidden layer 2-->hidden layer 3-->Vu^(j)
+xm-->hidden layer 1-->hidden layer 2-->hidden layer 3-->Vm^(i)
+prediction: Vu^(j).Vm^(i) 
+> two steps to find recommendation from a large set of items: retrieval & ranking 
+#retrieval: generate large list of plausible item candidates, 
+e.g., for each of the last 10 movies watched by the user, find 10 most similar movies, ||vm^(k)-vm^(i)||^2 
+e.g., for most viewed 3 genres, find the top 10 movies
+e.g., top 20 movies in the country 
+combned retrived items into list, removing duplicated and items already watched or purchased 
+#ranking: take list retrieved and rank using learned model 
+feed user vector and feature vector into the trained neural netowrk, 
+for each of user movie pair, comupte the predicted rating, 
+based on this, diaplyed the rank list of items to user 
+note: if have computed Vm for all movies in advance, can skip the movie network and just use Vu^(j).Vm^(i) to compute the predicted rating for each user-movie pair
+> retrieval step: 
+retrieving more items results in better performance, but slower recoomendations
+to analyse/optimize the trade-off, carry out offlien experiements to see if retrieving additional item results in more relevant recommendations (i.e., p(y^(i,j)=1) is higher for the top 10 recommended items)
+
+124.6.4 推荐系统的道德使用 (ethical use of recomendation systems)
+> what is the goal of the recommender system?
+The goal of the recommender system is to provide personalized recommendations to users that are relevant and useful, while also considering ethical implications such as fairness, transparency, and user privacy.
+> ethical considerations with recommender systems:
+e.g., 
+#travel industry: 
+good travel experiece to more users --> more profits --> bid higher for ads --> more users --> more profits --> bid higher for ads --> more users --> more profits
+#payday loans: 
+squeeze customers more --> more profits --> more ads --> squeez more customers --> more profits --> more ads --> squeeze more customers #not good for society 
+> other problematic cases:
+maximize user engagement (i.e., watch time) has led to large social media to amplify comspiracy theories and hate 
+ameioration: filter out problematic content such as hate speech, fraud, scames, violent content 
+can a ranking system maximize your profit rather than users welfare be presented in a transpratent way?
+amelioration: be transparent with users 
+
+125.6.5 基于内容过滤的TensorFlow实现
+> 
+xu -->hidden layer 1-->hidden layer 2-->hidden layer 3-->Vu
+xm -->hidden layer 1-->hidden layer 2-->hidden layer 3-->Vm 
+user_NN=tf.keras.models.Sequential([tf.keras.layers.Dense(64, activation='relu',
+, tf.keras.layers.Dense(32, activation='relu'), 
+tf.keras.layers.Dense(32)])
+item_NN=tf.keras.models.Sequential([tf.keras.layers.Dense(64, activation='relu'),
+tf.keras.layers.Dense(32, activation='relu'),
+tf.keras.layers.Dense(32)]) 
+input_user=tf.keras.layers.Input(shape=(nu_features,)) #nu_features: number of user features
+vu=user_NN(input_user)
+vu=tf.linalg.12_normalize(vu， axis=1) #normalize the user vector to have length 1 to make the algorithm work better 
+input_item=tf.keras.layers.Input(shape=(nm_features,)) #nm_features: number of item features
+vm=item_NN(input_item)
+vm=tf.linalg.12_normalize(vm, axis=1) #normalize the item vector to have length 1
+output=tf.keras.layers.Dot(axes=1)([vu,vm]) 
+model=Model([input_user, input_item], output) 
+cost_fn=tf.keras.losses.MeanSquareError()
+
+----------------------------------------------------------------week 10
+126.7.1 什么是强化学习 (reinforcement learning)
+>
+
+127.7.2 火星探测器示例
+> what is reinforcement learning?: 
+reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize some notion of cumulative reward. The agent receives feedback in the form of rewards or penalties based on the actions it takes, and it uses this feedback to improve its decision-making over time.
+e.g., autonomous helicopter 
+position of helicopter (state s) --function f--> how to move control sticks (action a) 
+#when moving in the sky, it is ambuguous what the best action is, so supervised learning is not a good way 
+reward system: whenever fly well, get a reward, whenever crash, get a penalty 
+> applications: controlling robots, factory optimization, financial trading, playing games
+
+128.7.3 The Return in reinforcement learning (reinforcement learning formalism)
+> mars rover example: 
+position of rover (state s, e.g., state 1, 2, 3, 4, 5, 6) 
+at different states, the rewards vary (s, a, R(s), new s) #state, action, reward, new state 
+
+129.7.4 强化学习中的决策与策略制定
+> return: 
+s1: 100, s2: 0, s3:0, s4:0, s5:0, s6:40 
+return=0+0.9*0+0.9^2*0+0.9^3*100=72.9
+return =R1+rR2+r^2R3+r^3R4+.... (until terminate state)
+discount factor r=0.9 #in fiance, it is also called interest rate 
+> policy #pi(s): the probability of taking action a at state s 
+state--(policy, pi)-->action a
+> the goal of reinforcement learning is to find a policy that tell you what action (a=pi(s)) to take in every state (s) to maximize the return 
+
+130.7.5 回顾关键概念
+> 
+states: # the set of all possible states
+actions: # the set of all possible actions
+rewards: # the set of all possible rewards
+discount factor: # the factor by which future rewards are discounted
+return: # the cumulative sum of discounted rewards
+policy pi: # the strategy that maps states to actions #在状态s应该采取动作a
+> markov decision process (MDP): A Markov Decision Process (MDP) assumes that the next state depends only on the current state and the current action, not on the previous history.
+P(St+1​∣St​,At​) #Memoryless（无记忆性）
+MDP 包括MDP
+├── States
+├── Actions
+├── Rewards
+├── Transition Probabilities
+└── Discount Factor
+Agent
+  │
+  │ choose action a
+  ▼
+Environment
+  │
+  ├── reward R
+  └── next state ’s 
+  State s
+      │
+      ▼
+Policy π
+      │
+      ▼
+Action a
+      │
+      ▼
+Environment
+      │
+      ├── Reward R
+      └── Next State ‘s
+
+131.8.1 状态动作值函数定义 (state-action value function)
+> state action value functio Q(s,a)=return if you start in state s, take action a, then behave optimally after that 
+> picking actions that maximize Q(s, a), also called Q^*
+Q(s,a) #在状态 s 下，采取动作 a，未来能够获得的累计回报（Return)https://www.xiaohongshu.com/explore/6a3caf73000000000f028698?xsec_token=ABvlKrC_VwIyvOJb4oC6kYFs5PZP5VLAggiLf7xG43zL0=&xsec_source=pc_feed
+the best possible return from state s is max(a)Q(s,a) #强调最佳return 
+the best possible action in state s is the action a that give max(a)Q(s,a) #强调最佳action
+
+132.8.2 状态动作值函数示例 
+> Q-S-A 
+import numpy as np 
+from utils import * #*: import all functions in utils.py 
+num_states=6 
+num_actions=2
+terminal_left_reward=100
+terminal_right_reward=40
+each_step_reward=0
+gamma=0.9 #discount factor 
+misstep_pro=0 
+generate_visualization(terminal_left_reward, terminal_right_reward, each_step_reward, gamma, misstep_pro) 
+
+
+133.8.3 Bellman方程
+> Bellman equation:
+Q(s,a)=Return if you start in state s, take action a (once), then behave optimally after that 
+s: current state, a:current action, R(s)=reward of current state, ‘s: state you get to after taking action a, ’a: action that you take in state ‘s. 
+Q(s,a)=R(s)+gamma*max(‘a)Q(‘s,’a) #the best possible return from state s is max(a)Q(s,a)
+e.g., Q(2,left)=R(2)+0.5max(Q(3, ’a))=0+0.5*25 
+> explanation of bellman equation: 
+Q(s, a)=Return if you start in state s, take action a(once), then behave optimally after that 
+the best possible return from state ‘s is max(‘a)Q(‘s,’a)
+Q(s,a)=R(s)+gamma*max(‘a)Q(‘s,’a)
+ #R（s): reward of current state, ‘s: state you get to after taking action a, ’a: action that you take in state ‘s.
+Q(s,a)=R1+gamma*R2+gamma^2*R3+gamma^3*R4+...=Return if you start in state s, take action a(once), then behave optimally after that 
+e.g., Q(4, left)=R(4)+gamma*R(3)+gamma^2*R(2)+gamma^3*R(1)
+
+134.8.4 随机环境（random/stochastic environment)
+> e.g., stohastic environment: 
+expected return=average (R1+gamma*R2+gamma^2*R3+gamma^3*R4+...)=E[R1+gamma*R2+gamma^2*R3+gamma^3*R4+...]
+> expected return: 
+goal of reinforcement learning: choose a policy pi(s)=a that tell us what action a to take in state s so as to maximize the expected return 
+Q(s,a)=R(s)+gamma*E[max(‘a)Q(‘s,’a)] 
+
+
+135.9.1 连续状态空间应用示例 (continuous state space)
+> Discrete vs. continnuous state:
+Discrete state: 状态是一个一个可以数出来的，可以编码的 （比如，棋盘游戏），可以用 Q-table 存储每个 Q(s,a)
+Continuous state: 状态是连续的，无法一一列举 (比如，无人机，状态是复杂的，比如包括位置，速度，角度，角速度等)，无法为每一个状态都建立一个 Q-table，因此需要用神经网络近似 Q(s,a)（Deep Q Learning）。
+
+136.9.2 月球着陆器 (lunar lander) 示例
+> lunar lander example: 
+s=[[x], [y], [vx], [vy], [theta], [vtheta], [leg1_contact], [leg2_contact]] #state vector 
+> reward function:
+getting to land pad: 100 -140
+additional reward for moving toward/aways from pad 
+crash: -100
+soft landing: +100
+leg grounded: +10
+fire main engine: -0.3 
+fire side thruster: -0.03 
+> lunar lander problem: 
+goal: learn a policy pi that, given s=[[x], [y], [vx], [vy], [theta], [vtheta], [leg1_contact], [leg2_contact]], tells us what action a to take (fire main engine, fire left thruster, fire right thruster, do nothing) so as to maximize the expected return
+pick action a =pi(s) so as to maximize the return 
+
+137.9.3 学习状态值函数 (learning the state value function)
+> deep reinforcement learning: 
+input x=[[s],[a]]: [[x], [y], [vx], [vy], [theta], [vtheta], [leg1_contact], [leg2_contact]] -->
+hidden layer 1 --> hidden layer 2 --> hidden layer 3 --> output y: Q(s,a) for each action a
+e.g., lunar lander:
+In a state s, use neural network to compute Q(s, nothing), Q(s, left), Q(s, main), Q(s, right), pick the action a that maximize Q(s,a) 
+> bellman equation:
+Q(s,a)=R(s)+gamma*max(‘a)Q(‘s,’a) #Q(x)=y, fw,b(x)=y 
+fw,b(x)=y 
+(s,a,R(s),’s) 
+y^(1)=R(s^(1))+gamma*max(‘a)Q(‘s,’a) 
+y^(2)=R(s^(2))+gamma*max(‘a)Q(‘s,’a)
+x1=(s^(1),a^(1)), x2=(s^(2),a^(2)) .....
+> learning algorithm: 
+initialize neural network with randomly as guess of Q(s,a) 
+repeat{
+    take actions in the lunar lander. get (s,a,R(s),’s)
+    store 100000 most recent (s,a,R(s),’s) tuples #reply buffer: save the most recent such 10000 tuples to take the action in the MDP 
+    train neural network:
+    create training set of 10000 examples using 
+    x=(s,a) and y=R(s)+gamma*max(‘a)Q(‘s,’a)
+    train Qnew such that Qnew(s,a)=y #train neural network to learn Qnew(s,a) using x and y
+    set Q=Qnew #update the neural network to be the new Q
+} # DQN algorithm: Deep Q Network algorithm 
+
+138.9.4 算法优化-改进的神经网络结构(algorithm optimization- improved neural network architecture)
+> deep reinforcement learning:
+input x=[[s],[a]]: [[x], [y], [vx], [vy], [theta], [vtheta], [leg1_contact], [leg2_contact]] -->
+hidden layer 1 --> hidden layer 2 --> hidden layer 3 --> output y: Q(s,a) for each action a
+In a state s, use neural network to compute Q(s, nothing), Q(s, left), Q(s, main), Q(s, right), pick the action a that maximize Q(s,a) 
+e.g.,
+s=[[x], [y], [vx], [vy], [theta], [vtheta], [leg1_contact], [leg2_contact]] -->
+hidden layer 1 --> hidden layer 2 --> hidden layer 3 --> output y: Q(s,nothing), Q(s,left), Q(s,main), Q(s,right) 
+
+139.9.5 算法优化ϵ-贪婪策略 (algorithm optimization-ϵ-greedy strategy)
+> learning algorithm: 
+initialize neural network with randomly as guess of Q(s,a)
+repeat{
+    take actions in the lunar lander. 
+    get (s,a,R(s),’s)
+    store 100000 most recent (s,a,R(s),’s) tuples #store experience 
+    train moel:
+    create training set of 10000 examples using 
+    x=(s,a) and y=R(s)+gamma*max(‘a)Q(‘s,’a)
+    train Qnew such that Qnew(s,a)=y, fw,b(x)=7
+    set Q=Qnew }
+#when the algorithm is still running, we do not really know which best action to take in every state, so how to take action in this step in the algorithm?
+> how to choose action while still learning: 
+in some state s, 
+option 1: pik the action a that maximize Q(s,a) 
+option 2: with probability 0.95, pick the action a that maximinze Q(s,a) #greedy, 'exploitation' step, 利用目前知道的最好策略
+with probability 0.05, pick a random action a  #'exploration' step/epsilon greedy policy, try some action,主动尝试新的动作，即使目前看起来不是最优
+#0.95, 0.05表示每次要决定动作时，采取哪种策略的概率
+#ε-Greedy 是插在神经网络算出 Q 值之后，真正执行 Action 之前
+Q Network
+      │
+      ▼
+ε-Greedy
+      │
+      ▼
+Choose Action
+      │
+      ▼
+Environment
+      │
+      ▼
+(s,a,R,‘s)
+      │
+      ▼
+Replay Buffer
+      │
+      ▼
+Train Q Network
+
+140.9.6 算法优化-小批量和软更新（mini-batching）
+> mini-batches: speed up reinforcement learning, supervised learning, neural network training, etc 
+soft updates: help reinforcement learning better converged
+> how to choose actions while still learning?
+e.g., 
+x    y
+2104 400
+1416 232
+1534 315
+...
+3120 870
+J(w,b)=1/2m*(​i=1 to m∑)​(fw,b(x^(i)​-y^(i)​)^2 #m=100000000
+repeat{
+    w=w-alpha*∂/∂w(J(w,b)) #w=w-alpha*∂/∂w*(1/2'm*(​i=1 to m'∑)​(fw,b(x^(i)​-y^(i)​)^2)
+    b=b-alpha*∂/∂b(J(w,b)) #b=b-alpha*∂/∂b*(1/2'm*(​i=1 to m'∑)​(fw,b(x^(i)​-y^(i)​)^2)
+}
+#if m=100000000, it is very slow to compute the gradient of J(w,b) with respect to w and b, so we can use mini-batches to speed up the training
+> minibaches 
+e.g.,
+x    y
+2104 400
+1416 232
+1534 315
+...
+3120 870, 
+# (2104, 400) & (1416, 232) as mini-batch1, (1534, 315) & (3120, 870) as mini-batch2...
+batch Learning 
+#一次性使用所有训练数据来计算梯度并更新模型参数，梯度方向最准确，下降稳定，计算慢，无法在线更新
+mini-batch learning 
+#每次使用训练数据中的一个小子集（比如 32、64、128，256 个样本）来计算梯度并更新参数，更新频繁，收敛速度快，梯度带有噪声
+#边学习边更新
+> learning algorithm:
+initialize neural network with randomly as guess of Q(s,a)
+repeat{
+    take actions in the lunar lander. get (s,a,R(s),’s)
+    store 100000 most recent (s,a,R(s),’s) tuples #store experience 
+    train moel:
+    create training set of 10000 examples using #use 1000 examples in mini-batch to train the model
+    x=(s,a) and y=R(s)+gamma*max(‘a)Q(‘s,’a)
+    train Qnew such that Qnew(s,a)=y, fw,b(x)=7
+    set Q=Qnew } #may abrupt change in Q(s,a) values, so we can use soft updates to make the change in Q(s,a) values more gradual and stable
+> soft update: help reinforcement learning better converged
+set Q=Qnew 
+w,b in old Q 
+new w, b in new Q 
+w_old= 0.01wnew + 0.99w_old
+b_old= 0.01bnew + 0.99b_old
+
+141.9.7 强化学习的状态 (the states of reinforcement learning)
+> limitations of reinforcement learning: 
+1) much easier to get to work in a simulation thant a real robot 
+2) far few application than supervised and unsupervised learning 
+
+142.10.1 总结与感谢
+supervised learning: regression, classification, linear regression, logistic regression, gradient descent 
+advanced learning algorithms: neural networks, decision trees, advice ML 
+unsupervised learning: recommenders, reinforcement learning, clustering, anomaly detection, collaborative filtering, content-based filtering, reinforcement learning 
+
+
+###############################################################################################
+1. 在做ML workflow之前，应先思考：
+raw data -> understand the data -> define prediction problem -> identify X/y ->
+check IDs/group -> check missingness -> check leakage -> understand time structure if it is time series data ->
+decide train/validation/test strategy -> preprocessing data -> feature engineering -> model selection -> 
+baseline model -> hyperparameter tuning -> model evaluation -> model interpretation -> model deloyment -> model monitoring 
+2. 养成习惯，拿到任何数据， 先回答：
+#what does one row represent? 
+每一行代表什么/observation/sample， 以防后面数据split时，出现数据泄漏
+#what exactly is my target y?
+模型预测的变量，target的类型决定model的类型， 连续型numerical (regression)/离散型 categorical (classification)/二分类/多分类
+#what information can legitimately be used as feature X?
+模型的输入，通常也叫predictor，independent variable， coveriate, input variable, 但统计学上和ML上永不完全等价， 
+时间数据：注意不能random split， 应该问does time matter? 
+#which columns are IDs/group/status variables rather than predictors?
+ID用于识别observation的变量，通常不做feature，但对数据的split很重要
+status variable，某个observation当前所属的状态，阶段，类别，与data lekage有关
+#what is missing, why might it be missing?
+某个observation的某个变量没有记录，ML中不能只问有没有missing，而是问为什么missing，因为missing本身可能携带信息，这也是
+为什么后面会涉及到drop, mean imputation, median imputation, mode imputation, KNN imputation, model-based imputation, missing indicator， etc
+删除缺失值，可能丢掉很多信息。
+面对缺失值：
+X_train -> imputer.fit(X_train) -> imputer.transform(X_train) -> scaler.fit(X_train) -> scaler.transform -> model fit 
+X_test -> imputer.transform(X_test) -> scaler.transform(X_test) -> model.predict 
+凡是 preprocessing，只要涉及 .fit()，默认都只在 train 上 fit
+(完整顺序：
+先 split train/validation/test, 然后只在 train 上 fit 所有预处理步骤；然后用这些已经学好的规则去 transform train / validation / test)
+Train ──→ imputer.fit(train) ──→ imputer.transform(train) ──→ scaler.fit(train) ──→ scaler.transform(train) ──→ model.fit(train
+Validation ───────────────────→ imputer.transform(val) ─────────────────────────→ scaler.transform(val) ─────→ model.predict(val)
+Test ─────────────────────────→ imputer.transform(test) ────────────────────────→ scaler.transform(test) ────→ model.predict(test))
+#could any variables leak future/target information?
+模型训练时获得了真是预测场景中本来不应该知道的信息（模型作弊），比如预测明天的股价时，使用了明天的新闻标题作为feature，这就是data leakage
+pipeline: 训练模型时，数据预处理的步骤应该和预测时保持一致，不能在训练时使用了预测时无法获得的信息
+当数据尺度不一致时，应该在pipeline中做scaler/normalization/standardization等，但不能先在整个数据集上做scaler/normalization/standardization，
+而是应该在train上fit scaler/normalizer/standardizer，然后transform train, validation, test，因为如果是那样，那scale时就已经使用了test的信息，
+所以正确顺序先先 split，再只在 train 上 fit 所有预处理步骤；然后用这些已经学好的规则去 transform train / validation / test
+凡是 preprocessing，只要涉及 .fit()，默认都只在 train 上 fit
+(完整顺序：
+先 split train/validation/test, 然后只在 train 上 fit 所有预处理步骤；然后用这些已经学好的规则去 transform train / validation / test)
+Train ──→ imputer.fit(train) ──→ imputer.transform(train) ──→ scaler.fit(train) ──→ scaler.transform(train) ──→ model.fit(train
+Validation ───────────────────→ imputer.transform(val) ─────────────────────────→ scaler.transform(val) ─────→ model.predict(val)
+Test ─────────────────────────→ imputer.transform(test) ────────────────────────→ scaler.transform(test) ────→ model.predict(test))
+# is there a temporal or grouped structure that determins how i should split the data?
+时间结构数据，应该注意，可能需要chronological split (past -> future), time-series split (多轮validation， ), rolling validation等
+如果observation是相互独立，且没有必须尊重时间顺序，可用random split
+chronological split: 比如，2018， 2019的数据用于train，2020的数据用于validation， 2021的数据用于test
+time-series split: 比如， 2018， 2019的数据用于tran，2020用于validation （第一次）， 2018， 2019， 2020的数据用于train，2021的数据用于validation （第二次）， 
+2018， 2019， 2020， 2021的数据用于train，2022的数据用于validation （第三次）， 以此类推
+expand rolling: 比如， 2018-2020的数据用于train，2021的数据用于predict （第一次）， 2018-2021的数据用于trian，2022的数据用于predict （第二次）， 2018-2022的数据用于train， 2023的数据用于predict （第三次），以此类推 
+rollowing window: 比如，2018， 2019， 2020 -> 2021, 2019, 2020, 2021 -> 2022, 2020, 2021, 2022 -> 2023, 2021, 2022, 2023 -> 2024 
+3. 以salmon lice数据为例，整个项目的workflow如下：
+#define ML problem:
+-业务，研究问题是什么
+-supervised/unsupervised/reinforcement learning
+-regression还是classification
+-X (feature, predictors, input variable)，y是什么(target, response, outcome variable)
+-baseline是什么
+#understand the data:
+-每一行代表什么
+-feature，target, ID, status variable
+-missing value
+-data leakage
+-时间结构 
+#build the modeling population:
+-为什么筛选salmonoid locality
+-为什么去掉fallow 
+-为什么必须has_reported=True 
+-为什么不能把缺失lice当0 
+#construct target 
+-为什么是adullt_female_lice_next 
+-groupby + shift(-1)在做什么
+-为什么还必须检查是不是‘真正下一周’
+-days_to_next_record==7
+#choose features：
+-当前adult female lice 
+-mobile/stationary lice 
+-temperature 
+-treatment 
+-week 
+-为什么不用total_lice 
+-feature engineering和leakage区别
+#train/validation/test split:
+-为什么不能random split 
+-2012-2022, train 
+-2023-2024 validation/dev 
+-2025 test 
+-2026 out-of-time 
+#baseline + simple model:
+-persistence baseline 
+-linear regression 
+-lost/cost/mae/rmse 
+#non-linear model + model selection:
+-random forest 
+-histgradientboosting
+-hyperparameters 
+-validation set的作用
+-overfitting / underfitting 
+#final evaluation：
+-retrain on train +validation 
+-test only once 
+-2026 oot 
+-baseline comparison
+-error analysis 
+#model interpretation:
+ -permutation importance 
+ -what it mean, what it does not mean 
+ -predictive vs. casual interpretation 
+ -limitations 
+
+
+                         Machine Learning
+                               │
+            ┌──────────────────┴──────────────────┐
+            │                                     │
+      Supervised Learning                  Unsupervised Learning
+        监督学习                               无监督学习
+            │                                     │
+       ┌────┴────┐                         ┌──────┴──────┐
+       │         │                         │             │
+ Regression  Classification             Clustering   Dimensionality
+   回归        分类                        聚类         Reduction
+       │         │                         │             │
+ Linear      Logistic                    K-Means        PCA
+ KNN         KNN
+ Tree        Tree
+ RF          RF
+ Boosting    Boosting
+ SVR         SVM
+             Naive Bayes
+
+linear regression: 寻找一组最好的w，b，让预测值y-hat尽量接近y，使loss最小化，优点在于可解释性，不是预测能力
+X->linear equation->continuous y
+ligistic regression：适用sigmoid，概率在0<=P<=1
+X->linear equation->sigmoid->probability->class 
+KNN: 近朱者赤近墨者黑，看一个新样本附近的人是谁，计算euclidean distance, d=sqrt((x1-x2)^2+(y1-y2)^2),因此，scaling很重要
+decision tree：关键在于哪里切x，目标在于每次split让子节点变得更加‘纯’
+分类树：gini impurity， entropy，etc）
+回归树： MSE etc
+最大问题时overfitting，这也是为什么会出现random forest
+random forest：本质是多棵decision trees一起投票
+分类random forest：多数投票
+回归random forest：多棵树预测取平均 
+random forest的经典思想：bagging reduce variance
+Gradient boosting: tabular data中最重要的一类模型之一，包括gradient boosting，HistGradientBoosting，XGBoost, LightGBM, CatBoost
+Gradient Boosting与Random forest的核心思想区别在于：
+random forest：大量树独立训练，最后平均，核心思想：boosting
+boosting：树一个接一个训练，后一颗树专门纠正前面的错误，核心思想：bagging
+                      Random Forest  Gradient Boosting 
+  思想                 Bagging        Boosting          
+  Tree                独立            顺序                
+  下一棵树             不管上一棵        修正上一棵          
+  并行                 容易            相对困难              
+  Overfitting         相对稳           参数不当会发生           
+  Prediction          平均             累加                
+  Tabular performance 很好             经常更好              
+SVM: support vector machine，思想是不只是把两类分开，而是找到间隔最大的那条边界,找两边最近的数据点尽可能远的boundary，这个距离叫margin，靠近边界的关键数据叫support vectors
+如果数据不能用直线分，可通过kernel把数据映射到更高维空间：
+linear kernel， polynomial， RBF，生成非线性的decision boundary 
+Naive Bayes：概率模型，在给定类别以后，各features条件独立
+K-means：不预测y
+PCA: 不预测y
+
+理解算法的第二层：
+Data -> Model -> Loss -> Optimization -> Generalization 和不同model面对的核心问题：
+Linear Regression ── bias / linearity
+Logistic Regression ─ probability / decision boundary
+KNN ──────────────── distance
+Decision Tree ────── splitting
+Random Forest ────── bagging / variance
+Gradient Boosting ── sequential error correction
+SVM ──────────────── margin / kernel
+Naive Bayes ──────── probability
+K-Means ──────────── distance / centroid
+PCA ──────────────── variance / projection
